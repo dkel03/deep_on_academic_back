@@ -1,0 +1,59 @@
+  scalar DateTime
+  scalar ID
+
+  type Query {
+    test(id: ID!): Test
+    tests: [Test!]!
+  }
+
+  type Mutation {
+    createTest(type: Type!, description: String!, answerSheet: [AnswerSheetInput!]!): Test!
+  }
+
+  type Test {
+    id: ID!
+    createdAt: DateTime!
+    type: Type!
+    description: String!
+    answerSheet: [AnswerSheet!]!
+  }
+
+  type AnswerSheet {
+    id: ID!
+    name: String!
+    answers: [Answer!]!
+  }
+
+  input AnswerSheetInput {
+    name: String!
+    answers: [AnswerInput!]!
+  }
+
+  type Answer {
+    id: ID!
+    number: Int!
+    answer: TenBranch!
+  }
+
+  input AnswerInput {
+    number: Int!
+    answer: TenBranch!
+  }
+
+  enum Type {
+    ACT
+    SAT
+  }
+
+  enum TenBranch {
+    A
+    B
+    C
+    D
+    E
+    F
+    G
+    H
+    J
+    K
+  }

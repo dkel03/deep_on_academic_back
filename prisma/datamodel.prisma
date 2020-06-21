@@ -1,0 +1,19 @@
+type Test {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  type: String!
+  description: String! 
+  answerSheet: [AnswerSheet!]!
+}
+
+type AnswerSheet {
+  id: ID! @id
+  name: String!
+  answers: [Answer!]!
+}
+
+type Answer {
+  id: ID! @id
+  number: Int!
+  answer: String!
+}
