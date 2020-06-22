@@ -17,3 +17,23 @@ type Answer {
   number: Int!
   answer: String!
 }
+
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  password: String!
+  auth: String!
+  logs: [Log!]
+}
+
+type Log {
+  id: ID! @id
+  test: Test! 
+  grade: Grade!
+}
+
+type Grade {
+  id: ID! @id
+  score: Int!
+}

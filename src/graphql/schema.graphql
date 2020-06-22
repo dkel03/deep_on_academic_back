@@ -8,6 +8,8 @@
 
   type Mutation {
     createTest(type: Type!, description: String!, answerSheet: [AnswerSheetInput!]!): Test!
+    signup(email: String!, password: String!, name: String!, auth: Auth!): AuthPayload
+    login(email: String!, password: String!): AuthPayload
   }
 
   type Test {
@@ -40,9 +42,38 @@
     answer: TenBranch!
   }
 
+  type User {
+    id: ID!
+    name: String!
+    email: String!
+    auth: Auth!
+    logs: [Log!]
+  }
+
+  type AuthPayload {
+    token: String
+    user: User
+  }
+
+  type Log {
+    id: ID!
+    test: Test! 
+    grade: Grade!
+  }
+
+  type Grade {
+    id: ID!
+    score: Int!
+  }
+
   enum Type {
     ACT
     SAT
+  }
+
+  enum Auth {
+    student
+    teacher
   }
 
   enum TenBranch {
