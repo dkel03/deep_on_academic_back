@@ -337,8 +337,8 @@ export type UserOrderByInput =
   | "email_DESC"
   | "password_ASC"
   | "password_DESC"
-  | "auth_ASC"
-  | "auth_DESC";
+  | "userType_ASC"
+  | "userType_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -612,20 +612,20 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
-  auth?: Maybe<String>;
-  auth_not?: Maybe<String>;
-  auth_in?: Maybe<String[] | String>;
-  auth_not_in?: Maybe<String[] | String>;
-  auth_lt?: Maybe<String>;
-  auth_lte?: Maybe<String>;
-  auth_gt?: Maybe<String>;
-  auth_gte?: Maybe<String>;
-  auth_contains?: Maybe<String>;
-  auth_not_contains?: Maybe<String>;
-  auth_starts_with?: Maybe<String>;
-  auth_not_starts_with?: Maybe<String>;
-  auth_ends_with?: Maybe<String>;
-  auth_not_ends_with?: Maybe<String>;
+  userType?: Maybe<String>;
+  userType_not?: Maybe<String>;
+  userType_in?: Maybe<String[] | String>;
+  userType_not_in?: Maybe<String[] | String>;
+  userType_lt?: Maybe<String>;
+  userType_lte?: Maybe<String>;
+  userType_gt?: Maybe<String>;
+  userType_gte?: Maybe<String>;
+  userType_contains?: Maybe<String>;
+  userType_not_contains?: Maybe<String>;
+  userType_starts_with?: Maybe<String>;
+  userType_not_starts_with?: Maybe<String>;
+  userType_ends_with?: Maybe<String>;
+  userType_not_ends_with?: Maybe<String>;
   logs_every?: Maybe<LogWhereInput>;
   logs_some?: Maybe<LogWhereInput>;
   logs_none?: Maybe<LogWhereInput>;
@@ -939,7 +939,7 @@ export interface UserCreateInput {
   name: String;
   email: String;
   password: String;
-  auth: String;
+  userType: String;
   logs?: Maybe<LogCreateManyInput>;
 }
 
@@ -952,7 +952,7 @@ export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  auth?: Maybe<String>;
+  userType?: Maybe<String>;
   logs?: Maybe<LogUpdateManyInput>;
 }
 
@@ -1011,7 +1011,7 @@ export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  auth?: Maybe<String>;
+  userType?: Maybe<String>;
 }
 
 export interface AnswerSubscriptionWhereInput {
@@ -1576,7 +1576,7 @@ export interface User {
   name: String;
   email: String;
   password: String;
-  auth: String;
+  userType: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -1584,7 +1584,7 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  auth: () => Promise<String>;
+  userType: () => Promise<String>;
   logs: <T = FragmentableArray<Log>>(args?: {
     where?: LogWhereInput;
     orderBy?: LogOrderByInput;
@@ -1603,7 +1603,7 @@ export interface UserSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  auth: () => Promise<AsyncIterator<String>>;
+  userType: () => Promise<AsyncIterator<String>>;
   logs: <T = Promise<AsyncIterator<LogSubscription>>>(args?: {
     where?: LogWhereInput;
     orderBy?: LogOrderByInput;
@@ -1622,7 +1622,7 @@ export interface UserNullablePromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  auth: () => Promise<String>;
+  userType: () => Promise<String>;
   logs: <T = FragmentableArray<Log>>(args?: {
     where?: LogWhereInput;
     orderBy?: LogOrderByInput;
@@ -1960,7 +1960,7 @@ export interface UserPreviousValues {
   name: String;
   email: String;
   password: String;
-  auth: String;
+  userType: String;
 }
 
 export interface UserPreviousValuesPromise
@@ -1970,7 +1970,7 @@ export interface UserPreviousValuesPromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  auth: () => Promise<String>;
+  userType: () => Promise<String>;
 }
 
 export interface UserPreviousValuesSubscription
@@ -1980,7 +1980,7 @@ export interface UserPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  auth: () => Promise<AsyncIterator<String>>;
+  userType: () => Promise<AsyncIterator<String>>;
 }
 
 /*

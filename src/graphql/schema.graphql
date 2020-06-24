@@ -4,11 +4,12 @@
   type Query {
     test(id: ID!): Test
     tests: [Test!]!
+    userType: String
   }
 
   type Mutation {
     createTest(type: Type!, description: String!, answerSheet: [AnswerSheetInput!]!): Test!
-    signup(email: String!, password: String!, name: String!, auth: Auth!): AuthPayload
+    signup(email: String!, password: String!, name: String!, userType: userType!): AuthPayload
     login(email: String!, password: String!): AuthPayload
   }
 
@@ -46,7 +47,7 @@
     id: ID!
     name: String!
     email: String!
-    auth: Auth!
+    userType: userType!
     logs: [Log!]
   }
 
@@ -71,9 +72,15 @@
     SAT
   }
 
-  enum Auth {
+  enum userType {
     student
     teacher
+  }
+
+  enum Role {
+    NONE
+    READ
+    WRITE
   }
 
   enum TenBranch {

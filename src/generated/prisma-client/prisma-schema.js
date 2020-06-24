@@ -906,7 +906,7 @@ type User {
   name: String!
   email: String!
   password: String!
-  auth: String!
+  userType: String!
   logs(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Log!]
 }
 
@@ -921,7 +921,7 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  auth: String!
+  userType: String!
   logs: LogCreateManyInput
 }
 
@@ -939,8 +939,8 @@ enum UserOrderByInput {
   email_DESC
   password_ASC
   password_DESC
-  auth_ASC
-  auth_DESC
+  userType_ASC
+  userType_DESC
 }
 
 type UserPreviousValues {
@@ -948,7 +948,7 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
-  auth: String!
+  userType: String!
 }
 
 type UserSubscriptionPayload {
@@ -973,7 +973,7 @@ input UserUpdateInput {
   name: String
   email: String
   password: String
-  auth: String
+  userType: String
   logs: LogUpdateManyInput
 }
 
@@ -981,7 +981,7 @@ input UserUpdateManyMutationInput {
   name: String
   email: String
   password: String
-  auth: String
+  userType: String
 }
 
 input UserWhereInput {
@@ -1041,20 +1041,20 @@ input UserWhereInput {
   password_not_starts_with: String
   password_ends_with: String
   password_not_ends_with: String
-  auth: String
-  auth_not: String
-  auth_in: [String!]
-  auth_not_in: [String!]
-  auth_lt: String
-  auth_lte: String
-  auth_gt: String
-  auth_gte: String
-  auth_contains: String
-  auth_not_contains: String
-  auth_starts_with: String
-  auth_not_starts_with: String
-  auth_ends_with: String
-  auth_not_ends_with: String
+  userType: String
+  userType_not: String
+  userType_in: [String!]
+  userType_not_in: [String!]
+  userType_lt: String
+  userType_lte: String
+  userType_gt: String
+  userType_gte: String
+  userType_contains: String
+  userType_not_contains: String
+  userType_starts_with: String
+  userType_not_starts_with: String
+  userType_ends_with: String
+  userType_not_ends_with: String
   logs_every: LogWhereInput
   logs_some: LogWhereInput
   logs_none: LogWhereInput
