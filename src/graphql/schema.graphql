@@ -4,6 +4,7 @@
   type Query {
     test(id: ID!): Test
     tests: [Test!]!
+    users: [User!]!
     userType: String
   }
 

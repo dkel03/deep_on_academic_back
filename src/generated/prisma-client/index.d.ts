@@ -939,7 +939,7 @@ export interface UserCreateInput {
   name: String;
   email: String;
   password: String;
-  userType: String;
+  userType?: Maybe<String>;
   logs?: Maybe<LogCreateManyInput>;
 }
 
@@ -1576,7 +1576,7 @@ export interface User {
   name: String;
   email: String;
   password: String;
-  userType: String;
+  userType?: String;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
@@ -1960,7 +1960,7 @@ export interface UserPreviousValues {
   name: String;
   email: String;
   password: String;
-  userType: String;
+  userType?: String;
 }
 
 export interface UserPreviousValuesPromise

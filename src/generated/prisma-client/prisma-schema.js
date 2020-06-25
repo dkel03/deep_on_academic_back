@@ -906,7 +906,7 @@ type User {
   name: String!
   email: String!
   password: String!
-  userType: String!
+  userType: String
   logs(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Log!]
 }
 
@@ -921,7 +921,7 @@ input UserCreateInput {
   name: String!
   email: String!
   password: String!
-  userType: String!
+  userType: String
   logs: LogCreateManyInput
 }
 
@@ -948,7 +948,7 @@ type UserPreviousValues {
   name: String!
   email: String!
   password: String!
-  userType: String!
+  userType: String
 }
 
 type UserSubscriptionPayload {

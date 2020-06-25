@@ -23,7 +23,7 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  userType: String!
+  userType: String
   logs: [Log!]
 }
 

@@ -6,6 +6,10 @@ const test = async (parent, args, context, info) => {
 const tests = async (parent, args, context, info) => {
   return context.prisma.tests();
 };
+const users = async (parent, args, context, info) => {
+  return context.prisma.users();
+};
+
 const userType = async (parent, args, context, info) => {
   const userType = getUserType(context);
   if (userType && userType === "student") {
@@ -20,5 +24,6 @@ const userType = async (parent, args, context, info) => {
 module.exports = {
   test,
   tests,
+  users,
   userType,
 };
