@@ -12,6 +12,13 @@ export const getUserType = (context) => {
 };
 
 export const getScore = (testAnswer, omrAnswer) => {
-  console.log(testAnswer, omrAnswer);
-  return 30;
+  let score = 0;
+  for(var i=0; i<testAnswer.length; i++){
+    for(var j=0; j<testAnswer[i].answers.length; j++){
+      if (testAnswer[i].answers[j].answer === omrAnswer[i].answers[j].answer) {
+        score += 1;
+      }
+    }
+  }
+  return score;
 }
