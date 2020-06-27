@@ -25,6 +25,33 @@ const createTest = (parent, args, context, info) => {
   });
 };
 
+const createLog = async (parent, args, context, info) => {
+  const answerSheet = await context.prisma.test({ id: args.testId }).answerSheet()
+  console.log(answerSheet[0].answers);
+  const OmrAnswerSheet = {
+    create: args.answerSheet.map(sheet => {
+      return {
+        name: sheet.name,
+        answers: {
+          create: sheet.answers.map(answer => {
+            return {
+              number: answer.number,
+              answer: answer.answer
+            }
+          })
+        }
+      }
+    })
+  }
+  const log = context.prisma.createLog({
+    user: {connect: { id: args.userId }},
+    test: {connect: { id: args.testId }},
+    answerSheet: OmrAnswerSheet,
+    score: 30,
+  });
+  return log;
+};
+
 const signup = async (parent, args, context, info) => {
   const password = await bcrypt.hash(args.password, 10);
   const user = await context.prisma.createUser({ ...args, password });
@@ -53,6 +80,7 @@ const login = async (parent, args, context, info) => {
 
 module.exports = {
   createTest,
+  createLog,
   signup,
   login,
 };

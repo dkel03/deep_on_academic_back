@@ -6,6 +6,12 @@ const test = async (parent, args, context, info) => {
 const tests = async (parent, args, context, info) => {
   return context.prisma.tests();
 };
+const log = async (parent, args, context, info) => {
+  return context.prisma.log({ id: args.id });
+}
+const logs = async (parent, args, context, info) => {
+  return context.prisma.logs();
+};
 const users = async (parent, args, context, info) => {
   return context.prisma.users();
 };
@@ -24,6 +30,8 @@ const userType = async (parent, args, context, info) => {
 module.exports = {
   test,
   tests,
+  log,
+  logs,
   users,
   userType,
 };

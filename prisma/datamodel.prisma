@@ -29,11 +29,9 @@ type User {
 
 type Log {
   id: ID! @id
-  test: Test! 
-  grade: Grade!
-}
-
-type Grade {
-  id: ID! @id
+  createdAt: DateTime @createdAt
+  user: User!
+  test: Test!
+  answerSheet: [AnswerSheet!]!
   score: Int!
 }

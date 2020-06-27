@@ -11,10 +11,6 @@ type AggregateAnswerSheet {
   count: Int!
 }
 
-type AggregateGrade {
-  count: Int!
-}
-
 type AggregateLog {
   count: Int!
 }
@@ -409,122 +405,13 @@ type BatchPayload {
 
 scalar DateTime
 
-type Grade {
-  id: ID!
-  score: Int!
-}
-
-type GradeConnection {
-  pageInfo: PageInfo!
-  edges: [GradeEdge]!
-  aggregate: AggregateGrade!
-}
-
-input GradeCreateInput {
-  id: ID
-  score: Int!
-}
-
-input GradeCreateOneInput {
-  create: GradeCreateInput
-  connect: GradeWhereUniqueInput
-}
-
-type GradeEdge {
-  node: Grade!
-  cursor: String!
-}
-
-enum GradeOrderByInput {
-  id_ASC
-  id_DESC
-  score_ASC
-  score_DESC
-}
-
-type GradePreviousValues {
-  id: ID!
-  score: Int!
-}
-
-type GradeSubscriptionPayload {
-  mutation: MutationType!
-  node: Grade
-  updatedFields: [String!]
-  previousValues: GradePreviousValues
-}
-
-input GradeSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: GradeWhereInput
-  AND: [GradeSubscriptionWhereInput!]
-  OR: [GradeSubscriptionWhereInput!]
-  NOT: [GradeSubscriptionWhereInput!]
-}
-
-input GradeUpdateDataInput {
-  score: Int
-}
-
-input GradeUpdateInput {
-  score: Int
-}
-
-input GradeUpdateManyMutationInput {
-  score: Int
-}
-
-input GradeUpdateOneRequiredInput {
-  create: GradeCreateInput
-  update: GradeUpdateDataInput
-  upsert: GradeUpsertNestedInput
-  connect: GradeWhereUniqueInput
-}
-
-input GradeUpsertNestedInput {
-  update: GradeUpdateDataInput!
-  create: GradeCreateInput!
-}
-
-input GradeWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  score: Int
-  score_not: Int
-  score_in: [Int!]
-  score_not_in: [Int!]
-  score_lt: Int
-  score_lte: Int
-  score_gt: Int
-  score_gte: Int
-  AND: [GradeWhereInput!]
-  OR: [GradeWhereInput!]
-  NOT: [GradeWhereInput!]
-}
-
-input GradeWhereUniqueInput {
-  id: ID
-}
-
 type Log {
   id: ID!
+  createdAt: DateTime
+  user: User!
   test: Test!
-  grade: Grade!
+  answerSheet(where: AnswerSheetWhereInput, orderBy: AnswerSheetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AnswerSheet!]
+  score: Int!
 }
 
 type LogConnection {
@@ -535,13 +422,22 @@ type LogConnection {
 
 input LogCreateInput {
   id: ID
+  user: UserCreateOneWithoutLogsInput!
   test: TestCreateOneInput!
-  grade: GradeCreateOneInput!
+  answerSheet: AnswerSheetCreateManyInput
+  score: Int!
 }
 
-input LogCreateManyInput {
-  create: [LogCreateInput!]
+input LogCreateManyWithoutUserInput {
+  create: [LogCreateWithoutUserInput!]
   connect: [LogWhereUniqueInput!]
+}
+
+input LogCreateWithoutUserInput {
+  id: ID
+  test: TestCreateOneInput!
+  answerSheet: AnswerSheetCreateManyInput
+  score: Int!
 }
 
 type LogEdge {
@@ -552,10 +448,16 @@ type LogEdge {
 enum LogOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  score_ASC
+  score_DESC
 }
 
 type LogPreviousValues {
   id: ID!
+  createdAt: DateTime
+  score: Int!
 }
 
 input LogScalarWhereInput {
@@ -573,6 +475,22 @@ input LogScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  score: Int
+  score_not: Int
+  score_in: [Int!]
+  score_not_in: [Int!]
+  score_lt: Int
+  score_lte: Int
+  score_gt: Int
+  score_gte: Int
   AND: [LogScalarWhereInput!]
   OR: [LogScalarWhereInput!]
   NOT: [LogScalarWhereInput!]
@@ -596,36 +514,53 @@ input LogSubscriptionWhereInput {
   NOT: [LogSubscriptionWhereInput!]
 }
 
-input LogUpdateDataInput {
-  test: TestUpdateOneRequiredInput
-  grade: GradeUpdateOneRequiredInput
-}
-
 input LogUpdateInput {
+  user: UserUpdateOneRequiredWithoutLogsInput
   test: TestUpdateOneRequiredInput
-  grade: GradeUpdateOneRequiredInput
+  answerSheet: AnswerSheetUpdateManyInput
+  score: Int
 }
 
-input LogUpdateManyInput {
-  create: [LogCreateInput!]
-  update: [LogUpdateWithWhereUniqueNestedInput!]
-  upsert: [LogUpsertWithWhereUniqueNestedInput!]
+input LogUpdateManyDataInput {
+  score: Int
+}
+
+input LogUpdateManyMutationInput {
+  score: Int
+}
+
+input LogUpdateManyWithoutUserInput {
+  create: [LogCreateWithoutUserInput!]
   delete: [LogWhereUniqueInput!]
   connect: [LogWhereUniqueInput!]
   set: [LogWhereUniqueInput!]
   disconnect: [LogWhereUniqueInput!]
+  update: [LogUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [LogUpsertWithWhereUniqueWithoutUserInput!]
   deleteMany: [LogScalarWhereInput!]
+  updateMany: [LogUpdateManyWithWhereNestedInput!]
 }
 
-input LogUpdateWithWhereUniqueNestedInput {
-  where: LogWhereUniqueInput!
-  data: LogUpdateDataInput!
+input LogUpdateManyWithWhereNestedInput {
+  where: LogScalarWhereInput!
+  data: LogUpdateManyDataInput!
 }
 
-input LogUpsertWithWhereUniqueNestedInput {
+input LogUpdateWithoutUserDataInput {
+  test: TestUpdateOneRequiredInput
+  answerSheet: AnswerSheetUpdateManyInput
+  score: Int
+}
+
+input LogUpdateWithWhereUniqueWithoutUserInput {
   where: LogWhereUniqueInput!
-  update: LogUpdateDataInput!
-  create: LogCreateInput!
+  data: LogUpdateWithoutUserDataInput!
+}
+
+input LogUpsertWithWhereUniqueWithoutUserInput {
+  where: LogWhereUniqueInput!
+  update: LogUpdateWithoutUserDataInput!
+  create: LogCreateWithoutUserInput!
 }
 
 input LogWhereInput {
@@ -643,8 +578,27 @@ input LogWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  user: UserWhereInput
   test: TestWhereInput
-  grade: GradeWhereInput
+  answerSheet_every: AnswerSheetWhereInput
+  answerSheet_some: AnswerSheetWhereInput
+  answerSheet_none: AnswerSheetWhereInput
+  score: Int
+  score_not: Int
+  score_in: [Int!]
+  score_not_in: [Int!]
+  score_lt: Int
+  score_lte: Int
+  score_gt: Int
+  score_gte: Int
   AND: [LogWhereInput!]
   OR: [LogWhereInput!]
   NOT: [LogWhereInput!]
@@ -669,14 +623,9 @@ type Mutation {
   upsertAnswerSheet(where: AnswerSheetWhereUniqueInput!, create: AnswerSheetCreateInput!, update: AnswerSheetUpdateInput!): AnswerSheet!
   deleteAnswerSheet(where: AnswerSheetWhereUniqueInput!): AnswerSheet
   deleteManyAnswerSheets(where: AnswerSheetWhereInput): BatchPayload!
-  createGrade(data: GradeCreateInput!): Grade!
-  updateGrade(data: GradeUpdateInput!, where: GradeWhereUniqueInput!): Grade
-  updateManyGrades(data: GradeUpdateManyMutationInput!, where: GradeWhereInput): BatchPayload!
-  upsertGrade(where: GradeWhereUniqueInput!, create: GradeCreateInput!, update: GradeUpdateInput!): Grade!
-  deleteGrade(where: GradeWhereUniqueInput!): Grade
-  deleteManyGrades(where: GradeWhereInput): BatchPayload!
   createLog(data: LogCreateInput!): Log!
   updateLog(data: LogUpdateInput!, where: LogWhereUniqueInput!): Log
+  updateManyLogs(data: LogUpdateManyMutationInput!, where: LogWhereInput): BatchPayload!
   upsertLog(where: LogWhereUniqueInput!, create: LogCreateInput!, update: LogUpdateInput!): Log!
   deleteLog(where: LogWhereUniqueInput!): Log
   deleteManyLogs(where: LogWhereInput): BatchPayload!
@@ -718,9 +667,6 @@ type Query {
   answerSheet(where: AnswerSheetWhereUniqueInput!): AnswerSheet
   answerSheets(where: AnswerSheetWhereInput, orderBy: AnswerSheetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AnswerSheet]!
   answerSheetsConnection(where: AnswerSheetWhereInput, orderBy: AnswerSheetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AnswerSheetConnection!
-  grade(where: GradeWhereUniqueInput!): Grade
-  grades(where: GradeWhereInput, orderBy: GradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Grade]!
-  gradesConnection(where: GradeWhereInput, orderBy: GradeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GradeConnection!
   log(where: LogWhereUniqueInput!): Log
   logs(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Log]!
   logsConnection(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LogConnection!
@@ -736,7 +682,6 @@ type Query {
 type Subscription {
   answer(where: AnswerSubscriptionWhereInput): AnswerSubscriptionPayload
   answerSheet(where: AnswerSheetSubscriptionWhereInput): AnswerSheetSubscriptionPayload
-  grade(where: GradeSubscriptionWhereInput): GradeSubscriptionPayload
   log(where: LogSubscriptionWhereInput): LogSubscriptionPayload
   test(where: TestSubscriptionWhereInput): TestSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
@@ -922,7 +867,20 @@ input UserCreateInput {
   email: String!
   password: String!
   userType: String
-  logs: LogCreateManyInput
+  logs: LogCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutLogsInput {
+  create: UserCreateWithoutLogsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutLogsInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  userType: String
 }
 
 type UserEdge {
@@ -974,7 +932,7 @@ input UserUpdateInput {
   email: String
   password: String
   userType: String
-  logs: LogUpdateManyInput
+  logs: LogUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -982,6 +940,25 @@ input UserUpdateManyMutationInput {
   email: String
   password: String
   userType: String
+}
+
+input UserUpdateOneRequiredWithoutLogsInput {
+  create: UserCreateWithoutLogsInput
+  update: UserUpdateWithoutLogsDataInput
+  upsert: UserUpsertWithoutLogsInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutLogsDataInput {
+  name: String
+  email: String
+  password: String
+  userType: String
+}
+
+input UserUpsertWithoutLogsInput {
+  update: UserUpdateWithoutLogsDataInput!
+  create: UserCreateWithoutLogsInput!
 }
 
 input UserWhereInput {

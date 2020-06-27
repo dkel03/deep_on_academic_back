@@ -18,7 +18,6 @@ export type Maybe<T> = T | undefined | null;
 export interface Exists {
   answer: (where?: AnswerWhereInput) => Promise<boolean>;
   answerSheet: (where?: AnswerSheetWhereInput) => Promise<boolean>;
-  grade: (where?: GradeWhereInput) => Promise<boolean>;
   log: (where?: LogWhereInput) => Promise<boolean>;
   test: (where?: TestWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
@@ -83,25 +82,6 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => AnswerSheetConnectionPromise;
-  grade: (where: GradeWhereUniqueInput) => GradeNullablePromise;
-  grades: (args?: {
-    where?: GradeWhereInput;
-    orderBy?: GradeOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Grade>;
-  gradesConnection: (args?: {
-    where?: GradeWhereInput;
-    orderBy?: GradeOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => GradeConnectionPromise;
   log: (where: LogWhereUniqueInput) => LogNullablePromise;
   logs: (args?: {
     where?: LogWhereInput;
@@ -199,27 +179,15 @@ export interface Prisma {
   deleteManyAnswerSheets: (
     where?: AnswerSheetWhereInput
   ) => BatchPayloadPromise;
-  createGrade: (data: GradeCreateInput) => GradePromise;
-  updateGrade: (args: {
-    data: GradeUpdateInput;
-    where: GradeWhereUniqueInput;
-  }) => GradePromise;
-  updateManyGrades: (args: {
-    data: GradeUpdateManyMutationInput;
-    where?: GradeWhereInput;
-  }) => BatchPayloadPromise;
-  upsertGrade: (args: {
-    where: GradeWhereUniqueInput;
-    create: GradeCreateInput;
-    update: GradeUpdateInput;
-  }) => GradePromise;
-  deleteGrade: (where: GradeWhereUniqueInput) => GradePromise;
-  deleteManyGrades: (where?: GradeWhereInput) => BatchPayloadPromise;
   createLog: (data: LogCreateInput) => LogPromise;
   updateLog: (args: {
     data: LogUpdateInput;
     where: LogWhereUniqueInput;
   }) => LogPromise;
+  updateManyLogs: (args: {
+    data: LogUpdateManyMutationInput;
+    where?: LogWhereInput;
+  }) => BatchPayloadPromise;
   upsertLog: (args: {
     where: LogWhereUniqueInput;
     create: LogCreateInput;
@@ -274,9 +242,6 @@ export interface Subscription {
   answerSheet: (
     where?: AnswerSheetSubscriptionWhereInput
   ) => AnswerSheetSubscriptionPayloadSubscription;
-  grade: (
-    where?: GradeSubscriptionWhereInput
-  ) => GradeSubscriptionPayloadSubscription;
   log: (
     where?: LogSubscriptionWhereInput
   ) => LogSubscriptionPayloadSubscription;
@@ -310,13 +275,13 @@ export type AnswerSheetOrderByInput =
   | "name_ASC"
   | "name_DESC";
 
-export type GradeOrderByInput =
+export type LogOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
   | "score_ASC"
   | "score_DESC";
-
-export type LogOrderByInput = "id_ASC" | "id_DESC";
 
 export type TestOrderByInput =
   | "id_ASC"
@@ -429,65 +394,11 @@ export interface AnswerSheetWhereInput {
   NOT?: Maybe<AnswerSheetWhereInput[] | AnswerSheetWhereInput>;
 }
 
-export type GradeWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface GradeWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  score?: Maybe<Int>;
-  score_not?: Maybe<Int>;
-  score_in?: Maybe<Int[] | Int>;
-  score_not_in?: Maybe<Int[] | Int>;
-  score_lt?: Maybe<Int>;
-  score_lte?: Maybe<Int>;
-  score_gt?: Maybe<Int>;
-  score_gte?: Maybe<Int>;
-  AND?: Maybe<GradeWhereInput[] | GradeWhereInput>;
-  OR?: Maybe<GradeWhereInput[] | GradeWhereInput>;
-  NOT?: Maybe<GradeWhereInput[] | GradeWhereInput>;
-}
-
 export type LogWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
 export interface LogWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  test?: Maybe<TestWhereInput>;
-  grade?: Maybe<GradeWhereInput>;
-  AND?: Maybe<LogWhereInput[] | LogWhereInput>;
-  OR?: Maybe<LogWhereInput[] | LogWhereInput>;
-  NOT?: Maybe<LogWhereInput[] | LogWhereInput>;
-}
-
-export interface TestWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -510,50 +421,23 @@ export interface TestWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
-  type?: Maybe<String>;
-  type_not?: Maybe<String>;
-  type_in?: Maybe<String[] | String>;
-  type_not_in?: Maybe<String[] | String>;
-  type_lt?: Maybe<String>;
-  type_lte?: Maybe<String>;
-  type_gt?: Maybe<String>;
-  type_gte?: Maybe<String>;
-  type_contains?: Maybe<String>;
-  type_not_contains?: Maybe<String>;
-  type_starts_with?: Maybe<String>;
-  type_not_starts_with?: Maybe<String>;
-  type_ends_with?: Maybe<String>;
-  type_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
+  user?: Maybe<UserWhereInput>;
+  test?: Maybe<TestWhereInput>;
   answerSheet_every?: Maybe<AnswerSheetWhereInput>;
   answerSheet_some?: Maybe<AnswerSheetWhereInput>;
   answerSheet_none?: Maybe<AnswerSheetWhereInput>;
-  AND?: Maybe<TestWhereInput[] | TestWhereInput>;
-  OR?: Maybe<TestWhereInput[] | TestWhereInput>;
-  NOT?: Maybe<TestWhereInput[] | TestWhereInput>;
+  score?: Maybe<Int>;
+  score_not?: Maybe<Int>;
+  score_in?: Maybe<Int[] | Int>;
+  score_not_in?: Maybe<Int[] | Int>;
+  score_lt?: Maybe<Int>;
+  score_lte?: Maybe<Int>;
+  score_gt?: Maybe<Int>;
+  score_gte?: Maybe<Int>;
+  AND?: Maybe<LogWhereInput[] | LogWhereInput>;
+  OR?: Maybe<LogWhereInput[] | LogWhereInput>;
+  NOT?: Maybe<LogWhereInput[] | LogWhereInput>;
 }
-
-export type TestWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
 
 export interface UserWhereInput {
   id?: Maybe<ID_Input>;
@@ -633,6 +517,74 @@ export interface UserWhereInput {
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
+
+export interface TestWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  type?: Maybe<String>;
+  type_not?: Maybe<String>;
+  type_in?: Maybe<String[] | String>;
+  type_not_in?: Maybe<String[] | String>;
+  type_lt?: Maybe<String>;
+  type_lte?: Maybe<String>;
+  type_gt?: Maybe<String>;
+  type_gte?: Maybe<String>;
+  type_contains?: Maybe<String>;
+  type_not_contains?: Maybe<String>;
+  type_starts_with?: Maybe<String>;
+  type_not_starts_with?: Maybe<String>;
+  type_ends_with?: Maybe<String>;
+  type_not_ends_with?: Maybe<String>;
+  description?: Maybe<String>;
+  description_not?: Maybe<String>;
+  description_in?: Maybe<String[] | String>;
+  description_not_in?: Maybe<String[] | String>;
+  description_lt?: Maybe<String>;
+  description_lte?: Maybe<String>;
+  description_gt?: Maybe<String>;
+  description_gte?: Maybe<String>;
+  description_contains?: Maybe<String>;
+  description_not_contains?: Maybe<String>;
+  description_starts_with?: Maybe<String>;
+  description_not_starts_with?: Maybe<String>;
+  description_ends_with?: Maybe<String>;
+  description_not_ends_with?: Maybe<String>;
+  answerSheet_every?: Maybe<AnswerSheetWhereInput>;
+  answerSheet_some?: Maybe<AnswerSheetWhereInput>;
+  answerSheet_none?: Maybe<AnswerSheetWhereInput>;
+  AND?: Maybe<TestWhereInput[] | TestWhereInput>;
+  OR?: Maybe<TestWhereInput[] | TestWhereInput>;
+  NOT?: Maybe<TestWhereInput[] | TestWhereInput>;
+}
+
+export type TestWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
 
 export interface AnswerCreateInput {
   id?: Maybe<ID_Input>;
@@ -759,23 +711,25 @@ export interface AnswerSheetUpdateManyMutationInput {
   name?: Maybe<String>;
 }
 
-export interface GradeCreateInput {
+export interface LogCreateInput {
   id?: Maybe<ID_Input>;
+  user: UserCreateOneWithoutLogsInput;
+  test: TestCreateOneInput;
+  answerSheet?: Maybe<AnswerSheetCreateManyInput>;
   score: Int;
 }
 
-export interface GradeUpdateInput {
-  score?: Maybe<Int>;
+export interface UserCreateOneWithoutLogsInput {
+  create?: Maybe<UserCreateWithoutLogsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface GradeUpdateManyMutationInput {
-  score?: Maybe<Int>;
-}
-
-export interface LogCreateInput {
+export interface UserCreateWithoutLogsInput {
   id?: Maybe<ID_Input>;
-  test: TestCreateOneInput;
-  grade: GradeCreateOneInput;
+  name: String;
+  email: String;
+  password: String;
+  userType?: Maybe<String>;
 }
 
 export interface TestCreateOneInput {
@@ -795,14 +749,30 @@ export interface AnswerSheetCreateManyInput {
   connect?: Maybe<AnswerSheetWhereUniqueInput[] | AnswerSheetWhereUniqueInput>;
 }
 
-export interface GradeCreateOneInput {
-  create?: Maybe<GradeCreateInput>;
-  connect?: Maybe<GradeWhereUniqueInput>;
+export interface LogUpdateInput {
+  user?: Maybe<UserUpdateOneRequiredWithoutLogsInput>;
+  test?: Maybe<TestUpdateOneRequiredInput>;
+  answerSheet?: Maybe<AnswerSheetUpdateManyInput>;
+  score?: Maybe<Int>;
 }
 
-export interface LogUpdateInput {
-  test?: Maybe<TestUpdateOneRequiredInput>;
-  grade?: Maybe<GradeUpdateOneRequiredInput>;
+export interface UserUpdateOneRequiredWithoutLogsInput {
+  create?: Maybe<UserCreateWithoutLogsInput>;
+  update?: Maybe<UserUpdateWithoutLogsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutLogsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface UserUpdateWithoutLogsDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  userType?: Maybe<String>;
+}
+
+export interface UserUpsertWithoutLogsInput {
+  update: UserUpdateWithoutLogsDataInput;
+  create: UserCreateWithoutLogsInput;
 }
 
 export interface TestUpdateOneRequiredInput {
@@ -907,20 +877,8 @@ export interface TestUpsertNestedInput {
   create: TestCreateInput;
 }
 
-export interface GradeUpdateOneRequiredInput {
-  create?: Maybe<GradeCreateInput>;
-  update?: Maybe<GradeUpdateDataInput>;
-  upsert?: Maybe<GradeUpsertNestedInput>;
-  connect?: Maybe<GradeWhereUniqueInput>;
-}
-
-export interface GradeUpdateDataInput {
+export interface LogUpdateManyMutationInput {
   score?: Maybe<Int>;
-}
-
-export interface GradeUpsertNestedInput {
-  update: GradeUpdateDataInput;
-  create: GradeCreateInput;
 }
 
 export interface TestUpdateInput {
@@ -940,12 +898,19 @@ export interface UserCreateInput {
   email: String;
   password: String;
   userType?: Maybe<String>;
-  logs?: Maybe<LogCreateManyInput>;
+  logs?: Maybe<LogCreateManyWithoutUserInput>;
 }
 
-export interface LogCreateManyInput {
-  create?: Maybe<LogCreateInput[] | LogCreateInput>;
+export interface LogCreateManyWithoutUserInput {
+  create?: Maybe<LogCreateWithoutUserInput[] | LogCreateWithoutUserInput>;
   connect?: Maybe<LogWhereUniqueInput[] | LogWhereUniqueInput>;
+}
+
+export interface LogCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  test: TestCreateOneInput;
+  answerSheet?: Maybe<AnswerSheetCreateManyInput>;
+  score: Int;
 }
 
 export interface UserUpdateInput {
@@ -953,38 +918,44 @@ export interface UserUpdateInput {
   email?: Maybe<String>;
   password?: Maybe<String>;
   userType?: Maybe<String>;
-  logs?: Maybe<LogUpdateManyInput>;
+  logs?: Maybe<LogUpdateManyWithoutUserInput>;
 }
 
-export interface LogUpdateManyInput {
-  create?: Maybe<LogCreateInput[] | LogCreateInput>;
-  update?: Maybe<
-    LogUpdateWithWhereUniqueNestedInput[] | LogUpdateWithWhereUniqueNestedInput
-  >;
-  upsert?: Maybe<
-    LogUpsertWithWhereUniqueNestedInput[] | LogUpsertWithWhereUniqueNestedInput
-  >;
+export interface LogUpdateManyWithoutUserInput {
+  create?: Maybe<LogCreateWithoutUserInput[] | LogCreateWithoutUserInput>;
   delete?: Maybe<LogWhereUniqueInput[] | LogWhereUniqueInput>;
   connect?: Maybe<LogWhereUniqueInput[] | LogWhereUniqueInput>;
   set?: Maybe<LogWhereUniqueInput[] | LogWhereUniqueInput>;
   disconnect?: Maybe<LogWhereUniqueInput[] | LogWhereUniqueInput>;
+  update?: Maybe<
+    | LogUpdateWithWhereUniqueWithoutUserInput[]
+    | LogUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | LogUpsertWithWhereUniqueWithoutUserInput[]
+    | LogUpsertWithWhereUniqueWithoutUserInput
+  >;
   deleteMany?: Maybe<LogScalarWhereInput[] | LogScalarWhereInput>;
+  updateMany?: Maybe<
+    LogUpdateManyWithWhereNestedInput[] | LogUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface LogUpdateWithWhereUniqueNestedInput {
+export interface LogUpdateWithWhereUniqueWithoutUserInput {
   where: LogWhereUniqueInput;
-  data: LogUpdateDataInput;
+  data: LogUpdateWithoutUserDataInput;
 }
 
-export interface LogUpdateDataInput {
+export interface LogUpdateWithoutUserDataInput {
   test?: Maybe<TestUpdateOneRequiredInput>;
-  grade?: Maybe<GradeUpdateOneRequiredInput>;
+  answerSheet?: Maybe<AnswerSheetUpdateManyInput>;
+  score?: Maybe<Int>;
 }
 
-export interface LogUpsertWithWhereUniqueNestedInput {
+export interface LogUpsertWithWhereUniqueWithoutUserInput {
   where: LogWhereUniqueInput;
-  update: LogUpdateDataInput;
-  create: LogCreateInput;
+  update: LogUpdateWithoutUserDataInput;
+  create: LogCreateWithoutUserInput;
 }
 
 export interface LogScalarWhereInput {
@@ -1002,9 +973,34 @@ export interface LogScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  score?: Maybe<Int>;
+  score_not?: Maybe<Int>;
+  score_in?: Maybe<Int[] | Int>;
+  score_not_in?: Maybe<Int[] | Int>;
+  score_lt?: Maybe<Int>;
+  score_lte?: Maybe<Int>;
+  score_gt?: Maybe<Int>;
+  score_gte?: Maybe<Int>;
   AND?: Maybe<LogScalarWhereInput[] | LogScalarWhereInput>;
   OR?: Maybe<LogScalarWhereInput[] | LogScalarWhereInput>;
   NOT?: Maybe<LogScalarWhereInput[] | LogScalarWhereInput>;
+}
+
+export interface LogUpdateManyWithWhereNestedInput {
+  where: LogScalarWhereInput;
+  data: LogUpdateManyDataInput;
+}
+
+export interface LogUpdateManyDataInput {
+  score?: Maybe<Int>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -1040,17 +1036,6 @@ export interface AnswerSheetSubscriptionWhereInput {
   NOT?: Maybe<
     AnswerSheetSubscriptionWhereInput[] | AnswerSheetSubscriptionWhereInput
   >;
-}
-
-export interface GradeSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<GradeWhereInput>;
-  AND?: Maybe<GradeSubscriptionWhereInput[] | GradeSubscriptionWhereInput>;
-  OR?: Maybe<GradeSubscriptionWhereInput[] | GradeSubscriptionWhereInput>;
-  NOT?: Maybe<GradeSubscriptionWhereInput[] | GradeSubscriptionWhereInput>;
 }
 
 export interface LogSubscriptionWhereInput {
@@ -1302,106 +1287,126 @@ export interface AggregateAnswerSheetSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface Grade {
-  id: ID_Output;
-  score: Int;
-}
-
-export interface GradePromise extends Promise<Grade>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  score: () => Promise<Int>;
-}
-
-export interface GradeSubscription
-  extends Promise<AsyncIterator<Grade>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  score: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface GradeNullablePromise
-  extends Promise<Grade | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  score: () => Promise<Int>;
-}
-
-export interface GradeConnection {
-  pageInfo: PageInfo;
-  edges: GradeEdge[];
-}
-
-export interface GradeConnectionPromise
-  extends Promise<GradeConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<GradeEdge>>() => T;
-  aggregate: <T = AggregateGradePromise>() => T;
-}
-
-export interface GradeConnectionSubscription
-  extends Promise<AsyncIterator<GradeConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<GradeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateGradeSubscription>() => T;
-}
-
-export interface GradeEdge {
-  node: Grade;
-  cursor: String;
-}
-
-export interface GradeEdgePromise extends Promise<GradeEdge>, Fragmentable {
-  node: <T = GradePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface GradeEdgeSubscription
-  extends Promise<AsyncIterator<GradeEdge>>,
-    Fragmentable {
-  node: <T = GradeSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateGrade {
-  count: Int;
-}
-
-export interface AggregateGradePromise
-  extends Promise<AggregateGrade>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateGradeSubscription
-  extends Promise<AsyncIterator<AggregateGrade>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface Log {
   id: ID_Output;
+  createdAt?: DateTimeOutput;
+  score: Int;
 }
 
 export interface LogPromise extends Promise<Log>, Fragmentable {
   id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  user: <T = UserPromise>() => T;
   test: <T = TestPromise>() => T;
-  grade: <T = GradePromise>() => T;
+  answerSheet: <T = FragmentableArray<AnswerSheet>>(args?: {
+    where?: AnswerSheetWhereInput;
+    orderBy?: AnswerSheetOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  score: () => Promise<Int>;
 }
 
 export interface LogSubscription
   extends Promise<AsyncIterator<Log>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  user: <T = UserSubscription>() => T;
   test: <T = TestSubscription>() => T;
-  grade: <T = GradeSubscription>() => T;
+  answerSheet: <T = Promise<AsyncIterator<AnswerSheetSubscription>>>(args?: {
+    where?: AnswerSheetWhereInput;
+    orderBy?: AnswerSheetOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  score: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface LogNullablePromise extends Promise<Log | null>, Fragmentable {
   id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  user: <T = UserPromise>() => T;
   test: <T = TestPromise>() => T;
-  grade: <T = GradePromise>() => T;
+  answerSheet: <T = FragmentableArray<AnswerSheet>>(args?: {
+    where?: AnswerSheetWhereInput;
+    orderBy?: AnswerSheetOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+  score: () => Promise<Int>;
+}
+
+export interface User {
+  id: ID_Output;
+  name: String;
+  email: String;
+  password: String;
+  userType?: String;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  userType: () => Promise<String>;
+  logs: <T = FragmentableArray<Log>>(args?: {
+    where?: LogWhereInput;
+    orderBy?: LogOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  userType: () => Promise<AsyncIterator<String>>;
+  logs: <T = Promise<AsyncIterator<LogSubscription>>>(args?: {
+    where?: LogWhereInput;
+    orderBy?: LogOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserNullablePromise
+  extends Promise<User | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  email: () => Promise<String>;
+  password: () => Promise<String>;
+  userType: () => Promise<String>;
+  logs: <T = FragmentableArray<Log>>(args?: {
+    where?: LogWhereInput;
+    orderBy?: LogOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface Test {
@@ -1571,69 +1576,6 @@ export interface AggregateTestSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface User {
-  id: ID_Output;
-  name: String;
-  email: String;
-  password: String;
-  userType?: String;
-}
-
-export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  userType: () => Promise<String>;
-  logs: <T = FragmentableArray<Log>>(args?: {
-    where?: LogWhereInput;
-    orderBy?: LogOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserSubscription
-  extends Promise<AsyncIterator<User>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  email: () => Promise<AsyncIterator<String>>;
-  password: () => Promise<AsyncIterator<String>>;
-  userType: () => Promise<AsyncIterator<String>>;
-  logs: <T = Promise<AsyncIterator<LogSubscription>>>(args?: {
-    where?: LogWhereInput;
-    orderBy?: LogOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface UserNullablePromise
-  extends Promise<User | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  email: () => Promise<String>;
-  password: () => Promise<String>;
-  userType: () => Promise<String>;
-  logs: <T = FragmentableArray<Log>>(args?: {
-    where?: LogWhereInput;
-    orderBy?: LogOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
 export interface UserConnection {
   pageInfo: PageInfo;
   edges: UserEdge[];
@@ -1795,50 +1737,6 @@ export interface AnswerSheetPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
 }
 
-export interface GradeSubscriptionPayload {
-  mutation: MutationType;
-  node: Grade;
-  updatedFields: String[];
-  previousValues: GradePreviousValues;
-}
-
-export interface GradeSubscriptionPayloadPromise
-  extends Promise<GradeSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = GradePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = GradePreviousValuesPromise>() => T;
-}
-
-export interface GradeSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<GradeSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = GradeSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = GradePreviousValuesSubscription>() => T;
-}
-
-export interface GradePreviousValues {
-  id: ID_Output;
-  score: Int;
-}
-
-export interface GradePreviousValuesPromise
-  extends Promise<GradePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  score: () => Promise<Int>;
-}
-
-export interface GradePreviousValuesSubscription
-  extends Promise<AsyncIterator<GradePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  score: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface LogSubscriptionPayload {
   mutation: MutationType;
   node: Log;
@@ -1866,18 +1764,24 @@ export interface LogSubscriptionPayloadSubscription
 
 export interface LogPreviousValues {
   id: ID_Output;
+  createdAt?: DateTimeOutput;
+  score: Int;
 }
 
 export interface LogPreviousValuesPromise
   extends Promise<LogPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  score: () => Promise<Int>;
 }
 
 export interface LogPreviousValuesSubscription
   extends Promise<AsyncIterator<LogPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  score: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface TestSubscriptionPayload {
@@ -2039,10 +1943,6 @@ export const models: Model[] = [
   },
   {
     name: "Log",
-    embedded: false
-  },
-  {
-    name: "Grade",
     embedded: false
   }
 ];

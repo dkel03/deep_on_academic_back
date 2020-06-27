@@ -4,12 +4,15 @@
   type Query {
     test(id: ID!): Test
     tests: [Test!]!
+    log(id: ID!): Log
+    logs: [Log!]!
     users: [User!]!
     userType: String
   }
 
   type Mutation {
     createTest(type: Type!, description: String!, answerSheet: [AnswerSheetInput!]!): Test!
+    createLog(userId: ID!, testId: ID!, answerSheet: [AnswerSheetInput!]!): Log!
     signup(email: String!, password: String!, name: String!, userType: userType!): AuthPayload
     login(email: String!, password: String!): AuthPayload
   }
@@ -59,12 +62,15 @@
 
   type Log {
     id: ID!
-    test: Test! 
-    grade: Grade!
+    createdAt: DateTime!
+    user: User!
+    test: Test!
+    answerSheet: [AnswerSheet!]!
+    score: Int!
   }
 
   type Grade {
-    id: ID!
+    id: ID
     score: Int!
   }
 
