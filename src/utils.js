@@ -10,3 +10,8 @@ export const getUserType = (context) => {
   }
   return null;
 };
+
+export const getScore = (testAnswer, omrAnswer) => {
+  console.log(testAnswer, omrAnswer);
+  return 30;
+}

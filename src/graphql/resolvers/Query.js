@@ -12,10 +12,12 @@ const log = async (parent, args, context, info) => {
 const logs = async (parent, args, context, info) => {
   return context.prisma.logs();
 };
+const user = async (parent, args, context, info) => {
+  return context.prisma.user({ id: args.id });
+}
 const users = async (parent, args, context, info) => {
   return context.prisma.users();
 };
-
 const userType = async (parent, args, context, info) => {
   const userType = getUserType(context);
   if (userType && userType === "student") {
@@ -32,6 +34,7 @@ module.exports = {
   tests,
   log,
   logs,
+  user,
   users,
   userType,
 };

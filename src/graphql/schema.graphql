@@ -6,6 +6,7 @@
     tests: [Test!]!
     log(id: ID!): Log
     logs: [Log!]!
+    user(id: ID!): User
     users: [User!]!
     userType: String
   }
