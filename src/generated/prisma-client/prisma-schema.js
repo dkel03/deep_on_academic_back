@@ -11,7 +11,15 @@ type AggregateAnswerSheet {
   count: Int!
 }
 
+type AggregateGradeSheet {
+  count: Int!
+}
+
 type AggregateLog {
+  count: Int!
+}
+
+type AggregateScore {
   count: Int!
 }
 
@@ -405,13 +413,217 @@ type BatchPayload {
 
 scalar DateTime
 
+type GradeSheet {
+  id: ID!
+  name: String!
+  sumScore: Int!
+  scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score!]
+}
+
+type GradeSheetConnection {
+  pageInfo: PageInfo!
+  edges: [GradeSheetEdge]!
+  aggregate: AggregateGradeSheet!
+}
+
+input GradeSheetCreateInput {
+  id: ID
+  name: String!
+  sumScore: Int!
+  scores: ScoreCreateManyInput
+}
+
+input GradeSheetCreateManyInput {
+  create: [GradeSheetCreateInput!]
+  connect: [GradeSheetWhereUniqueInput!]
+}
+
+type GradeSheetEdge {
+  node: GradeSheet!
+  cursor: String!
+}
+
+enum GradeSheetOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  sumScore_ASC
+  sumScore_DESC
+}
+
+type GradeSheetPreviousValues {
+  id: ID!
+  name: String!
+  sumScore: Int!
+}
+
+input GradeSheetScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  sumScore: Int
+  sumScore_not: Int
+  sumScore_in: [Int!]
+  sumScore_not_in: [Int!]
+  sumScore_lt: Int
+  sumScore_lte: Int
+  sumScore_gt: Int
+  sumScore_gte: Int
+  AND: [GradeSheetScalarWhereInput!]
+  OR: [GradeSheetScalarWhereInput!]
+  NOT: [GradeSheetScalarWhereInput!]
+}
+
+type GradeSheetSubscriptionPayload {
+  mutation: MutationType!
+  node: GradeSheet
+  updatedFields: [String!]
+  previousValues: GradeSheetPreviousValues
+}
+
+input GradeSheetSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GradeSheetWhereInput
+  AND: [GradeSheetSubscriptionWhereInput!]
+  OR: [GradeSheetSubscriptionWhereInput!]
+  NOT: [GradeSheetSubscriptionWhereInput!]
+}
+
+input GradeSheetUpdateDataInput {
+  name: String
+  sumScore: Int
+  scores: ScoreUpdateManyInput
+}
+
+input GradeSheetUpdateInput {
+  name: String
+  sumScore: Int
+  scores: ScoreUpdateManyInput
+}
+
+input GradeSheetUpdateManyDataInput {
+  name: String
+  sumScore: Int
+}
+
+input GradeSheetUpdateManyInput {
+  create: [GradeSheetCreateInput!]
+  update: [GradeSheetUpdateWithWhereUniqueNestedInput!]
+  upsert: [GradeSheetUpsertWithWhereUniqueNestedInput!]
+  delete: [GradeSheetWhereUniqueInput!]
+  connect: [GradeSheetWhereUniqueInput!]
+  set: [GradeSheetWhereUniqueInput!]
+  disconnect: [GradeSheetWhereUniqueInput!]
+  deleteMany: [GradeSheetScalarWhereInput!]
+  updateMany: [GradeSheetUpdateManyWithWhereNestedInput!]
+}
+
+input GradeSheetUpdateManyMutationInput {
+  name: String
+  sumScore: Int
+}
+
+input GradeSheetUpdateManyWithWhereNestedInput {
+  where: GradeSheetScalarWhereInput!
+  data: GradeSheetUpdateManyDataInput!
+}
+
+input GradeSheetUpdateWithWhereUniqueNestedInput {
+  where: GradeSheetWhereUniqueInput!
+  data: GradeSheetUpdateDataInput!
+}
+
+input GradeSheetUpsertWithWhereUniqueNestedInput {
+  where: GradeSheetWhereUniqueInput!
+  update: GradeSheetUpdateDataInput!
+  create: GradeSheetCreateInput!
+}
+
+input GradeSheetWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  sumScore: Int
+  sumScore_not: Int
+  sumScore_in: [Int!]
+  sumScore_not_in: [Int!]
+  sumScore_lt: Int
+  sumScore_lte: Int
+  sumScore_gt: Int
+  sumScore_gte: Int
+  scores_every: ScoreWhereInput
+  scores_some: ScoreWhereInput
+  scores_none: ScoreWhereInput
+  AND: [GradeSheetWhereInput!]
+  OR: [GradeSheetWhereInput!]
+  NOT: [GradeSheetWhereInput!]
+}
+
+input GradeSheetWhereUniqueInput {
+  id: ID
+}
+
 type Log {
   id: ID!
   createdAt: DateTime
-  user: User!
-  test: Test!
-  answerSheet(where: AnswerSheetWhereInput, orderBy: AnswerSheetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AnswerSheet!]
-  score: Int!
+  user: User
+  test: Test
+  totalScore: Int!
+  gradeInfo(where: GradeSheetWhereInput, orderBy: GradeSheetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GradeSheet!]
 }
 
 type LogConnection {
@@ -422,10 +634,10 @@ type LogConnection {
 
 input LogCreateInput {
   id: ID
-  user: UserCreateOneWithoutLogsInput!
-  test: TestCreateOneInput!
-  answerSheet: AnswerSheetCreateManyInput
-  score: Int!
+  user: UserCreateOneWithoutLogsInput
+  test: TestCreateOneInput
+  totalScore: Int!
+  gradeInfo: GradeSheetCreateManyInput
 }
 
 input LogCreateManyWithoutUserInput {
@@ -435,9 +647,9 @@ input LogCreateManyWithoutUserInput {
 
 input LogCreateWithoutUserInput {
   id: ID
-  test: TestCreateOneInput!
-  answerSheet: AnswerSheetCreateManyInput
-  score: Int!
+  test: TestCreateOneInput
+  totalScore: Int!
+  gradeInfo: GradeSheetCreateManyInput
 }
 
 type LogEdge {
@@ -450,14 +662,14 @@ enum LogOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
-  score_ASC
-  score_DESC
+  totalScore_ASC
+  totalScore_DESC
 }
 
 type LogPreviousValues {
   id: ID!
   createdAt: DateTime
-  score: Int!
+  totalScore: Int!
 }
 
 input LogScalarWhereInput {
@@ -483,14 +695,14 @@ input LogScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
-  score: Int
-  score_not: Int
-  score_in: [Int!]
-  score_not_in: [Int!]
-  score_lt: Int
-  score_lte: Int
-  score_gt: Int
-  score_gte: Int
+  totalScore: Int
+  totalScore_not: Int
+  totalScore_in: [Int!]
+  totalScore_not_in: [Int!]
+  totalScore_lt: Int
+  totalScore_lte: Int
+  totalScore_gt: Int
+  totalScore_gte: Int
   AND: [LogScalarWhereInput!]
   OR: [LogScalarWhereInput!]
   NOT: [LogScalarWhereInput!]
@@ -515,18 +727,18 @@ input LogSubscriptionWhereInput {
 }
 
 input LogUpdateInput {
-  user: UserUpdateOneRequiredWithoutLogsInput
-  test: TestUpdateOneRequiredInput
-  answerSheet: AnswerSheetUpdateManyInput
-  score: Int
+  user: UserUpdateOneWithoutLogsInput
+  test: TestUpdateOneInput
+  totalScore: Int
+  gradeInfo: GradeSheetUpdateManyInput
 }
 
 input LogUpdateManyDataInput {
-  score: Int
+  totalScore: Int
 }
 
 input LogUpdateManyMutationInput {
-  score: Int
+  totalScore: Int
 }
 
 input LogUpdateManyWithoutUserInput {
@@ -547,9 +759,9 @@ input LogUpdateManyWithWhereNestedInput {
 }
 
 input LogUpdateWithoutUserDataInput {
-  test: TestUpdateOneRequiredInput
-  answerSheet: AnswerSheetUpdateManyInput
-  score: Int
+  test: TestUpdateOneInput
+  totalScore: Int
+  gradeInfo: GradeSheetUpdateManyInput
 }
 
 input LogUpdateWithWhereUniqueWithoutUserInput {
@@ -588,17 +800,17 @@ input LogWhereInput {
   createdAt_gte: DateTime
   user: UserWhereInput
   test: TestWhereInput
-  answerSheet_every: AnswerSheetWhereInput
-  answerSheet_some: AnswerSheetWhereInput
-  answerSheet_none: AnswerSheetWhereInput
-  score: Int
-  score_not: Int
-  score_in: [Int!]
-  score_not_in: [Int!]
-  score_lt: Int
-  score_lte: Int
-  score_gt: Int
-  score_gte: Int
+  totalScore: Int
+  totalScore_not: Int
+  totalScore_in: [Int!]
+  totalScore_not_in: [Int!]
+  totalScore_lt: Int
+  totalScore_lte: Int
+  totalScore_gt: Int
+  totalScore_gte: Int
+  gradeInfo_every: GradeSheetWhereInput
+  gradeInfo_some: GradeSheetWhereInput
+  gradeInfo_none: GradeSheetWhereInput
   AND: [LogWhereInput!]
   OR: [LogWhereInput!]
   NOT: [LogWhereInput!]
@@ -623,12 +835,24 @@ type Mutation {
   upsertAnswerSheet(where: AnswerSheetWhereUniqueInput!, create: AnswerSheetCreateInput!, update: AnswerSheetUpdateInput!): AnswerSheet!
   deleteAnswerSheet(where: AnswerSheetWhereUniqueInput!): AnswerSheet
   deleteManyAnswerSheets(where: AnswerSheetWhereInput): BatchPayload!
+  createGradeSheet(data: GradeSheetCreateInput!): GradeSheet!
+  updateGradeSheet(data: GradeSheetUpdateInput!, where: GradeSheetWhereUniqueInput!): GradeSheet
+  updateManyGradeSheets(data: GradeSheetUpdateManyMutationInput!, where: GradeSheetWhereInput): BatchPayload!
+  upsertGradeSheet(where: GradeSheetWhereUniqueInput!, create: GradeSheetCreateInput!, update: GradeSheetUpdateInput!): GradeSheet!
+  deleteGradeSheet(where: GradeSheetWhereUniqueInput!): GradeSheet
+  deleteManyGradeSheets(where: GradeSheetWhereInput): BatchPayload!
   createLog(data: LogCreateInput!): Log!
   updateLog(data: LogUpdateInput!, where: LogWhereUniqueInput!): Log
   updateManyLogs(data: LogUpdateManyMutationInput!, where: LogWhereInput): BatchPayload!
   upsertLog(where: LogWhereUniqueInput!, create: LogCreateInput!, update: LogUpdateInput!): Log!
   deleteLog(where: LogWhereUniqueInput!): Log
   deleteManyLogs(where: LogWhereInput): BatchPayload!
+  createScore(data: ScoreCreateInput!): Score!
+  updateScore(data: ScoreUpdateInput!, where: ScoreWhereUniqueInput!): Score
+  updateManyScores(data: ScoreUpdateManyMutationInput!, where: ScoreWhereInput): BatchPayload!
+  upsertScore(where: ScoreWhereUniqueInput!, create: ScoreCreateInput!, update: ScoreUpdateInput!): Score!
+  deleteScore(where: ScoreWhereUniqueInput!): Score
+  deleteManyScores(where: ScoreWhereInput): BatchPayload!
   createTest(data: TestCreateInput!): Test!
   updateTest(data: TestUpdateInput!, where: TestWhereUniqueInput!): Test
   updateManyTests(data: TestUpdateManyMutationInput!, where: TestWhereInput): BatchPayload!
@@ -667,9 +891,15 @@ type Query {
   answerSheet(where: AnswerSheetWhereUniqueInput!): AnswerSheet
   answerSheets(where: AnswerSheetWhereInput, orderBy: AnswerSheetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AnswerSheet]!
   answerSheetsConnection(where: AnswerSheetWhereInput, orderBy: AnswerSheetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AnswerSheetConnection!
+  gradeSheet(where: GradeSheetWhereUniqueInput!): GradeSheet
+  gradeSheets(where: GradeSheetWhereInput, orderBy: GradeSheetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GradeSheet]!
+  gradeSheetsConnection(where: GradeSheetWhereInput, orderBy: GradeSheetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GradeSheetConnection!
   log(where: LogWhereUniqueInput!): Log
   logs(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Log]!
   logsConnection(where: LogWhereInput, orderBy: LogOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LogConnection!
+  score(where: ScoreWhereUniqueInput!): Score
+  scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score]!
+  scoresConnection(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ScoreConnection!
   test(where: TestWhereUniqueInput!): Test
   tests(where: TestWhereInput, orderBy: TestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Test]!
   testsConnection(where: TestWhereInput, orderBy: TestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestConnection!
@@ -679,10 +909,209 @@ type Query {
   node(id: ID!): Node
 }
 
+type Score {
+  id: ID!
+  number: Int!
+  ox: String!
+}
+
+type ScoreConnection {
+  pageInfo: PageInfo!
+  edges: [ScoreEdge]!
+  aggregate: AggregateScore!
+}
+
+input ScoreCreateInput {
+  id: ID
+  number: Int!
+  ox: String!
+}
+
+input ScoreCreateManyInput {
+  create: [ScoreCreateInput!]
+  connect: [ScoreWhereUniqueInput!]
+}
+
+type ScoreEdge {
+  node: Score!
+  cursor: String!
+}
+
+enum ScoreOrderByInput {
+  id_ASC
+  id_DESC
+  number_ASC
+  number_DESC
+  ox_ASC
+  ox_DESC
+}
+
+type ScorePreviousValues {
+  id: ID!
+  number: Int!
+  ox: String!
+}
+
+input ScoreScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  number: Int
+  number_not: Int
+  number_in: [Int!]
+  number_not_in: [Int!]
+  number_lt: Int
+  number_lte: Int
+  number_gt: Int
+  number_gte: Int
+  ox: String
+  ox_not: String
+  ox_in: [String!]
+  ox_not_in: [String!]
+  ox_lt: String
+  ox_lte: String
+  ox_gt: String
+  ox_gte: String
+  ox_contains: String
+  ox_not_contains: String
+  ox_starts_with: String
+  ox_not_starts_with: String
+  ox_ends_with: String
+  ox_not_ends_with: String
+  AND: [ScoreScalarWhereInput!]
+  OR: [ScoreScalarWhereInput!]
+  NOT: [ScoreScalarWhereInput!]
+}
+
+type ScoreSubscriptionPayload {
+  mutation: MutationType!
+  node: Score
+  updatedFields: [String!]
+  previousValues: ScorePreviousValues
+}
+
+input ScoreSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ScoreWhereInput
+  AND: [ScoreSubscriptionWhereInput!]
+  OR: [ScoreSubscriptionWhereInput!]
+  NOT: [ScoreSubscriptionWhereInput!]
+}
+
+input ScoreUpdateDataInput {
+  number: Int
+  ox: String
+}
+
+input ScoreUpdateInput {
+  number: Int
+  ox: String
+}
+
+input ScoreUpdateManyDataInput {
+  number: Int
+  ox: String
+}
+
+input ScoreUpdateManyInput {
+  create: [ScoreCreateInput!]
+  update: [ScoreUpdateWithWhereUniqueNestedInput!]
+  upsert: [ScoreUpsertWithWhereUniqueNestedInput!]
+  delete: [ScoreWhereUniqueInput!]
+  connect: [ScoreWhereUniqueInput!]
+  set: [ScoreWhereUniqueInput!]
+  disconnect: [ScoreWhereUniqueInput!]
+  deleteMany: [ScoreScalarWhereInput!]
+  updateMany: [ScoreUpdateManyWithWhereNestedInput!]
+}
+
+input ScoreUpdateManyMutationInput {
+  number: Int
+  ox: String
+}
+
+input ScoreUpdateManyWithWhereNestedInput {
+  where: ScoreScalarWhereInput!
+  data: ScoreUpdateManyDataInput!
+}
+
+input ScoreUpdateWithWhereUniqueNestedInput {
+  where: ScoreWhereUniqueInput!
+  data: ScoreUpdateDataInput!
+}
+
+input ScoreUpsertWithWhereUniqueNestedInput {
+  where: ScoreWhereUniqueInput!
+  update: ScoreUpdateDataInput!
+  create: ScoreCreateInput!
+}
+
+input ScoreWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  number: Int
+  number_not: Int
+  number_in: [Int!]
+  number_not_in: [Int!]
+  number_lt: Int
+  number_lte: Int
+  number_gt: Int
+  number_gte: Int
+  ox: String
+  ox_not: String
+  ox_in: [String!]
+  ox_not_in: [String!]
+  ox_lt: String
+  ox_lte: String
+  ox_gt: String
+  ox_gte: String
+  ox_contains: String
+  ox_not_contains: String
+  ox_starts_with: String
+  ox_not_starts_with: String
+  ox_ends_with: String
+  ox_not_ends_with: String
+  AND: [ScoreWhereInput!]
+  OR: [ScoreWhereInput!]
+  NOT: [ScoreWhereInput!]
+}
+
+input ScoreWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
   answer(where: AnswerSubscriptionWhereInput): AnswerSubscriptionPayload
   answerSheet(where: AnswerSheetSubscriptionWhereInput): AnswerSheetSubscriptionPayload
+  gradeSheet(where: GradeSheetSubscriptionWhereInput): GradeSheetSubscriptionPayload
   log(where: LogSubscriptionWhereInput): LogSubscriptionPayload
+  score(where: ScoreSubscriptionWhereInput): ScoreSubscriptionPayload
   test(where: TestSubscriptionWhereInput): TestSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
@@ -771,10 +1200,12 @@ input TestUpdateManyMutationInput {
   description: String
 }
 
-input TestUpdateOneRequiredInput {
+input TestUpdateOneInput {
   create: TestCreateInput
   update: TestUpdateDataInput
   upsert: TestUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
   connect: TestWhereUniqueInput
 }
 
@@ -942,10 +1373,12 @@ input UserUpdateManyMutationInput {
   userType: String
 }
 
-input UserUpdateOneRequiredWithoutLogsInput {
+input UserUpdateOneWithoutLogsInput {
   create: UserCreateWithoutLogsInput
   update: UserUpdateWithoutLogsDataInput
   upsert: UserUpsertWithoutLogsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 

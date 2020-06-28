@@ -4,12 +4,12 @@ const user = (parent, args, context, info) => {
 const test = (parent, args, context, info) => {
   return context.prisma.log({ id: parent.id }).test()
 }
-const answerSheet = (parent, args, context, info) => {
-  return context.prisma.log({ id: parent.id }).answerSheet()
+const gradeInfo = (parent, args, context, info) => {
+  return context.prisma.log({ id: parent.id }).gradeInfo()
 }
 
 module.exports = {
   user,
   test,
-  answerSheet,
+  gradeInfo,
 }

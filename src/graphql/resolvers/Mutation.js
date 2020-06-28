@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { APP_SECRET, getScore } from "../../utils";
+import { APP_SECRET, getGrade } from "../../utils";
 
 const createTest = (parent, args, context, info) => {
   const answerSheet = {
@@ -38,27 +38,12 @@ const createLog = async (parent, args, context, info) => {
     }
   `
   const { answerSheet } = await context.prisma.test( {id: args.testId }).$fragment(fragment);
-  const score = await getScore(answerSheet, args.answerSheet);
-  const OmrAnswerSheet = {
-    create: args.answerSheet.map(sheet => {
-      return {
-        name: sheet.name,
-        answers: {
-          create: sheet.answers.map(answer => {
-            return {
-              number: answer.number,
-              answer: answer.answer
-            }
-          })
-        }
-      }
-    })
-  };
+  const { totalScore, gradeInfo } = await getGrade(answerSheet, args.answerSheet);
   const log = await context.prisma.createLog({
     user: {connect: { id: args.userId }},
     test: {connect: { id: args.testId }},
-    answerSheet: OmrAnswerSheet,
-    score
+    totalScore,
+    gradeInfo
   })
   return log;
 };

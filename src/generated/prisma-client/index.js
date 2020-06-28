@@ -23,6 +23,14 @@ var models = [
   {
     name: "Log",
     embedded: false
+  },
+  {
+    name: "GradeSheet",
+    embedded: false
+  },
+  {
+    name: "Score",
+    embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
