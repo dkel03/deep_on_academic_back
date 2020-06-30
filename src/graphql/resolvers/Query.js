@@ -10,7 +10,19 @@ const log = async (parent, args, context, info) => {
   return context.prisma.log({ id: args.id });
 }
 const logs = async (parent, args, context, info) => {
-  return context.prisma.logs();
+  const where = args.filter
+  ? {
+      OR: [
+        { logName: args.filter },
+      ],
+    }
+  : {};
+  return context.prisma.logs({
+    where,
+    skip: args.skip,
+    first: args.first,
+    orderBy: args.orderBy,
+  });
 };
 const user = async (parent, args, context, info) => {
   return context.prisma.user({ id: args.id });

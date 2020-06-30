@@ -5,7 +5,7 @@
     test(id: ID!): Test
     tests: [Test!]!
     log(id: ID!): Log
-    logs: [Log!]!
+    logs(filter: String, skip: Int, first: Int, orderBy: LogOrderByInput): [Log!]!
     user(id: ID!): User
     users: [User!]!
     userType: String
@@ -126,4 +126,13 @@
   enum OX {
     O
     X
+  }
+
+  enum LogOrderByInput {
+    user_ASC
+    user_DESC
+    test_ASC
+    test_DESC
+    createdAt_ASC
+    createdAt_DESC
   }
