@@ -415,6 +415,7 @@ scalar DateTime
 
 type GradeSheet {
   id: ID!
+  logName: String
   name: String!
   sumScore: Int!
   scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score!]
@@ -428,6 +429,7 @@ type GradeSheetConnection {
 
 input GradeSheetCreateInput {
   id: ID
+  logName: String
   name: String!
   sumScore: Int!
   scores: ScoreCreateManyInput
@@ -446,6 +448,8 @@ type GradeSheetEdge {
 enum GradeSheetOrderByInput {
   id_ASC
   id_DESC
+  logName_ASC
+  logName_DESC
   name_ASC
   name_DESC
   sumScore_ASC
@@ -454,6 +458,7 @@ enum GradeSheetOrderByInput {
 
 type GradeSheetPreviousValues {
   id: ID!
+  logName: String
   name: String!
   sumScore: Int!
 }
@@ -473,6 +478,20 @@ input GradeSheetScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  logName: String
+  logName_not: String
+  logName_in: [String!]
+  logName_not_in: [String!]
+  logName_lt: String
+  logName_lte: String
+  logName_gt: String
+  logName_gte: String
+  logName_contains: String
+  logName_not_contains: String
+  logName_starts_with: String
+  logName_not_starts_with: String
+  logName_ends_with: String
+  logName_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -519,18 +538,21 @@ input GradeSheetSubscriptionWhereInput {
 }
 
 input GradeSheetUpdateDataInput {
+  logName: String
   name: String
   sumScore: Int
   scores: ScoreUpdateManyInput
 }
 
 input GradeSheetUpdateInput {
+  logName: String
   name: String
   sumScore: Int
   scores: ScoreUpdateManyInput
 }
 
 input GradeSheetUpdateManyDataInput {
+  logName: String
   name: String
   sumScore: Int
 }
@@ -548,6 +570,7 @@ input GradeSheetUpdateManyInput {
 }
 
 input GradeSheetUpdateManyMutationInput {
+  logName: String
   name: String
   sumScore: Int
 }
@@ -583,6 +606,20 @@ input GradeSheetWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  logName: String
+  logName_not: String
+  logName_in: [String!]
+  logName_not_in: [String!]
+  logName_lt: String
+  logName_lte: String
+  logName_gt: String
+  logName_gte: String
+  logName_contains: String
+  logName_not_contains: String
+  logName_starts_with: String
+  logName_not_starts_with: String
+  logName_ends_with: String
+  logName_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -620,6 +657,7 @@ input GradeSheetWhereUniqueInput {
 type Log {
   id: ID!
   createdAt: DateTime
+  logName: String
   user: User
   test: Test
   totalScore: Int!
@@ -634,6 +672,7 @@ type LogConnection {
 
 input LogCreateInput {
   id: ID
+  logName: String
   user: UserCreateOneWithoutLogsInput
   test: TestCreateOneInput
   totalScore: Int!
@@ -647,6 +686,7 @@ input LogCreateManyWithoutUserInput {
 
 input LogCreateWithoutUserInput {
   id: ID
+  logName: String
   test: TestCreateOneInput
   totalScore: Int!
   gradeInfo: GradeSheetCreateManyInput
@@ -662,6 +702,8 @@ enum LogOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  logName_ASC
+  logName_DESC
   totalScore_ASC
   totalScore_DESC
 }
@@ -669,6 +711,7 @@ enum LogOrderByInput {
 type LogPreviousValues {
   id: ID!
   createdAt: DateTime
+  logName: String
   totalScore: Int!
 }
 
@@ -695,6 +738,20 @@ input LogScalarWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  logName: String
+  logName_not: String
+  logName_in: [String!]
+  logName_not_in: [String!]
+  logName_lt: String
+  logName_lte: String
+  logName_gt: String
+  logName_gte: String
+  logName_contains: String
+  logName_not_contains: String
+  logName_starts_with: String
+  logName_not_starts_with: String
+  logName_ends_with: String
+  logName_not_ends_with: String
   totalScore: Int
   totalScore_not: Int
   totalScore_in: [Int!]
@@ -727,6 +784,7 @@ input LogSubscriptionWhereInput {
 }
 
 input LogUpdateInput {
+  logName: String
   user: UserUpdateOneWithoutLogsInput
   test: TestUpdateOneInput
   totalScore: Int
@@ -734,10 +792,12 @@ input LogUpdateInput {
 }
 
 input LogUpdateManyDataInput {
+  logName: String
   totalScore: Int
 }
 
 input LogUpdateManyMutationInput {
+  logName: String
   totalScore: Int
 }
 
@@ -759,6 +819,7 @@ input LogUpdateManyWithWhereNestedInput {
 }
 
 input LogUpdateWithoutUserDataInput {
+  logName: String
   test: TestUpdateOneInput
   totalScore: Int
   gradeInfo: GradeSheetUpdateManyInput
@@ -798,6 +859,20 @@ input LogWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  logName: String
+  logName_not: String
+  logName_in: [String!]
+  logName_not_in: [String!]
+  logName_lt: String
+  logName_lte: String
+  logName_gt: String
+  logName_gte: String
+  logName_contains: String
+  logName_not_contains: String
+  logName_starts_with: String
+  logName_not_starts_with: String
+  logName_ends_with: String
+  logName_not_ends_with: String
   user: UserWhereInput
   test: TestWhereInput
   totalScore: Int
@@ -818,6 +893,7 @@ input LogWhereInput {
 
 input LogWhereUniqueInput {
   id: ID
+  logName: String
 }
 
 scalar Long
@@ -911,6 +987,7 @@ type Query {
 
 type Score {
   id: ID!
+  logName: String
   number: Int!
   ox: String!
 }
@@ -923,6 +1000,7 @@ type ScoreConnection {
 
 input ScoreCreateInput {
   id: ID
+  logName: String
   number: Int!
   ox: String!
 }
@@ -940,6 +1018,8 @@ type ScoreEdge {
 enum ScoreOrderByInput {
   id_ASC
   id_DESC
+  logName_ASC
+  logName_DESC
   number_ASC
   number_DESC
   ox_ASC
@@ -948,6 +1028,7 @@ enum ScoreOrderByInput {
 
 type ScorePreviousValues {
   id: ID!
+  logName: String
   number: Int!
   ox: String!
 }
@@ -967,6 +1048,20 @@ input ScoreScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  logName: String
+  logName_not: String
+  logName_in: [String!]
+  logName_not_in: [String!]
+  logName_lt: String
+  logName_lte: String
+  logName_gt: String
+  logName_gte: String
+  logName_contains: String
+  logName_not_contains: String
+  logName_starts_with: String
+  logName_not_starts_with: String
+  logName_ends_with: String
+  logName_not_ends_with: String
   number: Int
   number_not: Int
   number_in: [Int!]
@@ -1013,16 +1108,19 @@ input ScoreSubscriptionWhereInput {
 }
 
 input ScoreUpdateDataInput {
+  logName: String
   number: Int
   ox: String
 }
 
 input ScoreUpdateInput {
+  logName: String
   number: Int
   ox: String
 }
 
 input ScoreUpdateManyDataInput {
+  logName: String
   number: Int
   ox: String
 }
@@ -1040,6 +1138,7 @@ input ScoreUpdateManyInput {
 }
 
 input ScoreUpdateManyMutationInput {
+  logName: String
   number: Int
   ox: String
 }
@@ -1075,6 +1174,20 @@ input ScoreWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  logName: String
+  logName_not: String
+  logName_in: [String!]
+  logName_not_in: [String!]
+  logName_lt: String
+  logName_lte: String
+  logName_gt: String
+  logName_gte: String
+  logName_contains: String
+  logName_not_contains: String
+  logName_starts_with: String
+  logName_not_starts_with: String
+  logName_ends_with: String
+  logName_not_ends_with: String
   number: Int
   number_not: Int
   number_in: [Int!]

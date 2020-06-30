@@ -11,7 +11,7 @@ export const getUserType = (context) => {
   return null;
 };
 
-export const getGrade = (testAnswer, omrAnswer) => {
+export const getGrade = (testAnswer, omrAnswer, logName) => {
   const gradeInfo = {
     create: []
   };
@@ -24,17 +24,20 @@ export const getGrade = (testAnswer, omrAnswer) => {
         totalScore += 1;
         sumScore += 1;
         scores.push({
+          logName,
           number: testAnswer[i].answers[j].number,
           ox: "O"
         })
       } else {
         scores.push({
+          logName,
           number: testAnswer[i].answers[j].number,
           ox: "X"
         })
       }
     }
     gradeInfo.create.push({
+      logName,
       name: testAnswer[i].name,
       sumScore,
       scores: {
@@ -43,4 +46,16 @@ export const getGrade = (testAnswer, omrAnswer) => {
     })
   }
   return { totalScore, gradeInfo };
+}
+
+export function randomString() {
+  var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+  var string_length = 15;
+  var randomstring = '';
+  for (var i=0; i<string_length; i++) {
+    var rnum = Math.floor(Math.random() * chars.length);
+    randomstring += chars.substring(rnum,rnum+1);
+  }
+  //document.randform.randomfield.value = randomstring;
+  return randomstring;
 }

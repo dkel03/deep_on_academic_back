@@ -30,6 +30,7 @@ type User {
 type Log {
   id: ID! @id
   createdAt: DateTime @createdAt
+  logName: String! @unique
   user: User
   test: Test
   totalScore: Int!
@@ -38,6 +39,7 @@ type Log {
 
 type GradeSheet {
   id: ID! @id
+  logName: String
   name: String!
   sumScore: Int!
   scores: [Score!]!
@@ -45,6 +47,7 @@ type GradeSheet {
 
 type Score {
   id: ID! @id
+  logName: String
   number: Int!
   ox: String!
 }
