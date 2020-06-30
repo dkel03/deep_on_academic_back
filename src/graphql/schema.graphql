@@ -129,10 +129,12 @@
   }
 
   enum LogOrderByInput {
-    user_ASC
-    user_DESC
-    test_ASC
-    test_DESC
+    id_ASC
+    id_DESC
     createdAt_ASC
     createdAt_DESC
+    logName_ASC
+    logName_DESC
+    totalScore_ASC
+    totalScore_DESC
   }
