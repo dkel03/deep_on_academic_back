@@ -19,6 +19,10 @@
     login(email: String!, password: String!): AuthPayload
   }
 
+  type Subscription {
+    newLog: Log
+  }
+
   type Test {
     id: ID!
     createdAt: DateTime!
