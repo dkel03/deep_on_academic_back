@@ -28,7 +28,14 @@ const user = async (parent, args, context, info) => {
   return context.prisma.user({ id: args.id });
 }
 const users = async (parent, args, context, info) => {
-  return context.prisma.users();
+  const where = args.filter
+  ? {
+      OR: [
+        { userType: args.filter },
+      ],
+    }
+  : {};
+  return context.prisma.users({where});
 };
 const userType = async (parent, args, context, info) => {
   const userType = getUserType(context);

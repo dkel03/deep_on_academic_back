@@ -7,7 +7,7 @@
     log(id: ID!): Log
     logs(filter: String, skip: Int, first: Int, orderBy: LogOrderByInput): [Log!]!
     user(id: ID!): User
-    users: [User!]!
+    users(filter: userType): [User!]!
     userType: String
   }
 
@@ -65,7 +65,7 @@
   type Log {
     id: ID!
     createdAt: DateTime!
-    logName: String
+    logName: String!
     user: User!
     test: Test!
     totalScore: Int!
@@ -74,14 +74,14 @@
 
   type GradeSheet {
     id: ID!
-    logName: String
+    logName: String!
     name: String!
     sumScore: Int!
     scores: [Score!]!
   }
 
   input GradeSheetInput {
-    logName: String
+    logName: String!
     name: String!
     sumScore: Int!
     scores: [ScoreInput!]!
@@ -89,13 +89,13 @@
 
   type Score {
     id: ID!
-    logName: String
+    logName: String!
     number: Int!
     ox: OX!
   }
 
   input ScoreInput {
-    logName: String
+    logName: String!
     number: Int!
     ox: OX!
   }
