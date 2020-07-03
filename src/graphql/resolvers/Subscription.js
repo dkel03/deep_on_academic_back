@@ -1,13 +1,21 @@
-const newLogSubscribe = (parent, args, context, info) => {
-  return context.prisma.$subscribe.log({ mutation_in: ["CREATED"] }).node();
+const LogSubscribe = (parent, args, context, info) => {
+  return context.prisma.$subscribe.log({ mutation_in: ["CREATED", "DELETED"] }).node();
 };
-const newLog = {
-  subscribe: newLogSubscribe,
+const logSubscription = {
+  subscribe: LogSubscribe,
   resolve: (payload) => {
-    return payload;
+    if(!payload) {
+      return {
+        state: "deleted"
+      }
+    }
+    return {
+      state: "created",
+      log: payload
+    };
   },
 };
 
 module.exports = {
-  newLog,
+  logSubscription,
 };

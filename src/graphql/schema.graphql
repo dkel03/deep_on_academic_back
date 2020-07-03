@@ -20,7 +20,12 @@
   }
 
   type Subscription {
-    newLog: Log
+    logSubscription: LogPayload!
+  }
+
+  type LogPayload {
+    state: State!
+    log: Log
   }
 
   type Test {
@@ -141,4 +146,9 @@
     logName_DESC
     totalScore_ASC
     totalScore_DESC
+  }
+
+  enum State {
+    created
+    deleted
   }
