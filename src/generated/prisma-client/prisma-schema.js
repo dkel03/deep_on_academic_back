@@ -33,6 +33,7 @@ type AggregateUser {
 
 type Answer {
   id: ID!
+  testName: String
   number: Int!
   answer: String!
 }
@@ -45,6 +46,7 @@ type AnswerConnection {
 
 input AnswerCreateInput {
   id: ID
+  testName: String
   number: Int!
   answer: String!
 }
@@ -62,6 +64,8 @@ type AnswerEdge {
 enum AnswerOrderByInput {
   id_ASC
   id_DESC
+  testName_ASC
+  testName_DESC
   number_ASC
   number_DESC
   answer_ASC
@@ -70,6 +74,7 @@ enum AnswerOrderByInput {
 
 type AnswerPreviousValues {
   id: ID!
+  testName: String
   number: Int!
   answer: String!
 }
@@ -89,6 +94,20 @@ input AnswerScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  testName: String
+  testName_not: String
+  testName_in: [String!]
+  testName_not_in: [String!]
+  testName_lt: String
+  testName_lte: String
+  testName_gt: String
+  testName_gte: String
+  testName_contains: String
+  testName_not_contains: String
+  testName_starts_with: String
+  testName_not_starts_with: String
+  testName_ends_with: String
+  testName_not_ends_with: String
   number: Int
   number_not: Int
   number_in: [Int!]
@@ -118,6 +137,7 @@ input AnswerScalarWhereInput {
 
 type AnswerSheet {
   id: ID!
+  testName: String
   name: String!
   answers(where: AnswerWhereInput, orderBy: AnswerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Answer!]
 }
@@ -130,6 +150,7 @@ type AnswerSheetConnection {
 
 input AnswerSheetCreateInput {
   id: ID
+  testName: String
   name: String!
   answers: AnswerCreateManyInput
 }
@@ -147,12 +168,15 @@ type AnswerSheetEdge {
 enum AnswerSheetOrderByInput {
   id_ASC
   id_DESC
+  testName_ASC
+  testName_DESC
   name_ASC
   name_DESC
 }
 
 type AnswerSheetPreviousValues {
   id: ID!
+  testName: String
   name: String!
 }
 
@@ -171,6 +195,20 @@ input AnswerSheetScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  testName: String
+  testName_not: String
+  testName_in: [String!]
+  testName_not_in: [String!]
+  testName_lt: String
+  testName_lte: String
+  testName_gt: String
+  testName_gte: String
+  testName_contains: String
+  testName_not_contains: String
+  testName_starts_with: String
+  testName_not_starts_with: String
+  testName_ends_with: String
+  testName_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -209,16 +247,19 @@ input AnswerSheetSubscriptionWhereInput {
 }
 
 input AnswerSheetUpdateDataInput {
+  testName: String
   name: String
   answers: AnswerUpdateManyInput
 }
 
 input AnswerSheetUpdateInput {
+  testName: String
   name: String
   answers: AnswerUpdateManyInput
 }
 
 input AnswerSheetUpdateManyDataInput {
+  testName: String
   name: String
 }
 
@@ -235,6 +276,7 @@ input AnswerSheetUpdateManyInput {
 }
 
 input AnswerSheetUpdateManyMutationInput {
+  testName: String
   name: String
 }
 
@@ -269,6 +311,20 @@ input AnswerSheetWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  testName: String
+  testName_not: String
+  testName_in: [String!]
+  testName_not_in: [String!]
+  testName_lt: String
+  testName_lte: String
+  testName_gt: String
+  testName_gte: String
+  testName_contains: String
+  testName_not_contains: String
+  testName_starts_with: String
+  testName_not_starts_with: String
+  testName_ends_with: String
+  testName_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -314,16 +370,19 @@ input AnswerSubscriptionWhereInput {
 }
 
 input AnswerUpdateDataInput {
+  testName: String
   number: Int
   answer: String
 }
 
 input AnswerUpdateInput {
+  testName: String
   number: Int
   answer: String
 }
 
 input AnswerUpdateManyDataInput {
+  testName: String
   number: Int
   answer: String
 }
@@ -341,6 +400,7 @@ input AnswerUpdateManyInput {
 }
 
 input AnswerUpdateManyMutationInput {
+  testName: String
   number: Int
   answer: String
 }
@@ -376,6 +436,20 @@ input AnswerWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  testName: String
+  testName_not: String
+  testName_in: [String!]
+  testName_not_in: [String!]
+  testName_lt: String
+  testName_lte: String
+  testName_gt: String
+  testName_gte: String
+  testName_contains: String
+  testName_not_contains: String
+  testName_starts_with: String
+  testName_not_starts_with: String
+  testName_ends_with: String
+  testName_not_ends_with: String
   number: Int
   number_not: Int
   number_in: [Int!]
@@ -657,7 +731,7 @@ input GradeSheetWhereUniqueInput {
 type Log {
   id: ID!
   createdAt: DateTime
-  logName: String
+  logName: String!
   user: User
   test: Test
   totalScore: Int!
@@ -672,7 +746,7 @@ type LogConnection {
 
 input LogCreateInput {
   id: ID
-  logName: String
+  logName: String!
   user: UserCreateOneWithoutLogsInput
   test: TestCreateOneInput
   totalScore: Int!
@@ -686,7 +760,7 @@ input LogCreateManyWithoutUserInput {
 
 input LogCreateWithoutUserInput {
   id: ID
-  logName: String
+  logName: String!
   test: TestCreateOneInput
   totalScore: Int!
   gradeInfo: GradeSheetCreateManyInput
@@ -711,7 +785,7 @@ enum LogOrderByInput {
 type LogPreviousValues {
   id: ID!
   createdAt: DateTime
-  logName: String
+  logName: String!
   totalScore: Int!
 }
 
@@ -1232,6 +1306,7 @@ type Subscription {
 type Test {
   id: ID!
   createdAt: DateTime!
+  testName: String!
   type: String!
   description: String!
   answerSheet(where: AnswerSheetWhereInput, orderBy: AnswerSheetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AnswerSheet!]
@@ -1245,6 +1320,7 @@ type TestConnection {
 
 input TestCreateInput {
   id: ID
+  testName: String!
   type: String!
   description: String!
   answerSheet: AnswerSheetCreateManyInput
@@ -1265,6 +1341,8 @@ enum TestOrderByInput {
   id_DESC
   createdAt_ASC
   createdAt_DESC
+  testName_ASC
+  testName_DESC
   type_ASC
   type_DESC
   description_ASC
@@ -1274,6 +1352,7 @@ enum TestOrderByInput {
 type TestPreviousValues {
   id: ID!
   createdAt: DateTime!
+  testName: String!
   type: String!
   description: String!
 }
@@ -1297,18 +1376,21 @@ input TestSubscriptionWhereInput {
 }
 
 input TestUpdateDataInput {
+  testName: String
   type: String
   description: String
   answerSheet: AnswerSheetUpdateManyInput
 }
 
 input TestUpdateInput {
+  testName: String
   type: String
   description: String
   answerSheet: AnswerSheetUpdateManyInput
 }
 
 input TestUpdateManyMutationInput {
+  testName: String
   type: String
   description: String
 }
@@ -1350,6 +1432,20 @@ input TestWhereInput {
   createdAt_lte: DateTime
   createdAt_gt: DateTime
   createdAt_gte: DateTime
+  testName: String
+  testName_not: String
+  testName_in: [String!]
+  testName_not_in: [String!]
+  testName_lt: String
+  testName_lte: String
+  testName_gt: String
+  testName_gte: String
+  testName_contains: String
+  testName_not_contains: String
+  testName_starts_with: String
+  testName_not_starts_with: String
+  testName_ends_with: String
+  testName_not_ends_with: String
   type: String
   type_not: String
   type_in: [String!]
@@ -1388,6 +1484,7 @@ input TestWhereInput {
 
 input TestWhereUniqueInput {
   id: ID
+  testName: String
 }
 
 type User {

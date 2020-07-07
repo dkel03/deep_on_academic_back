@@ -342,6 +342,8 @@ export interface ClientConstructor<T> {
 export type AnswerOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "testName_ASC"
+  | "testName_DESC"
   | "number_ASC"
   | "number_DESC"
   | "answer_ASC"
@@ -350,6 +352,8 @@ export type AnswerOrderByInput =
 export type AnswerSheetOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "testName_ASC"
+  | "testName_DESC"
   | "name_ASC"
   | "name_DESC";
 
@@ -388,6 +392,8 @@ export type TestOrderByInput =
   | "id_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
+  | "testName_ASC"
+  | "testName_DESC"
   | "type_ASC"
   | "type_DESC"
   | "description_ASC"
@@ -426,6 +432,20 @@ export interface AnswerWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  testName?: Maybe<String>;
+  testName_not?: Maybe<String>;
+  testName_in?: Maybe<String[] | String>;
+  testName_not_in?: Maybe<String[] | String>;
+  testName_lt?: Maybe<String>;
+  testName_lte?: Maybe<String>;
+  testName_gt?: Maybe<String>;
+  testName_gte?: Maybe<String>;
+  testName_contains?: Maybe<String>;
+  testName_not_contains?: Maybe<String>;
+  testName_starts_with?: Maybe<String>;
+  testName_not_starts_with?: Maybe<String>;
+  testName_ends_with?: Maybe<String>;
+  testName_not_ends_with?: Maybe<String>;
   number?: Maybe<Int>;
   number_not?: Maybe<Int>;
   number_in?: Maybe<Int[] | Int>;
@@ -472,6 +492,20 @@ export interface AnswerSheetWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  testName?: Maybe<String>;
+  testName_not?: Maybe<String>;
+  testName_in?: Maybe<String[] | String>;
+  testName_not_in?: Maybe<String[] | String>;
+  testName_lt?: Maybe<String>;
+  testName_lte?: Maybe<String>;
+  testName_gt?: Maybe<String>;
+  testName_gte?: Maybe<String>;
+  testName_contains?: Maybe<String>;
+  testName_not_contains?: Maybe<String>;
+  testName_starts_with?: Maybe<String>;
+  testName_not_starts_with?: Maybe<String>;
+  testName_ends_with?: Maybe<String>;
+  testName_not_ends_with?: Maybe<String>;
   name?: Maybe<String>;
   name_not?: Maybe<String>;
   name_in?: Maybe<String[] | String>;
@@ -775,6 +809,20 @@ export interface TestWhereInput {
   createdAt_lte?: Maybe<DateTimeInput>;
   createdAt_gt?: Maybe<DateTimeInput>;
   createdAt_gte?: Maybe<DateTimeInput>;
+  testName?: Maybe<String>;
+  testName_not?: Maybe<String>;
+  testName_in?: Maybe<String[] | String>;
+  testName_not_in?: Maybe<String[] | String>;
+  testName_lt?: Maybe<String>;
+  testName_lte?: Maybe<String>;
+  testName_gt?: Maybe<String>;
+  testName_gte?: Maybe<String>;
+  testName_contains?: Maybe<String>;
+  testName_not_contains?: Maybe<String>;
+  testName_starts_with?: Maybe<String>;
+  testName_not_starts_with?: Maybe<String>;
+  testName_ends_with?: Maybe<String>;
+  testName_not_ends_with?: Maybe<String>;
   type?: Maybe<String>;
   type_not?: Maybe<String>;
   type_in?: Maybe<String[] | String>;
@@ -817,6 +865,7 @@ export type ScoreWhereUniqueInput = AtLeastOne<{
 
 export type TestWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
+  testName?: Maybe<String>;
 }>;
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -826,22 +875,26 @@ export type UserWhereUniqueInput = AtLeastOne<{
 
 export interface AnswerCreateInput {
   id?: Maybe<ID_Input>;
+  testName?: Maybe<String>;
   number: Int;
   answer: String;
 }
 
 export interface AnswerUpdateInput {
+  testName?: Maybe<String>;
   number?: Maybe<Int>;
   answer?: Maybe<String>;
 }
 
 export interface AnswerUpdateManyMutationInput {
+  testName?: Maybe<String>;
   number?: Maybe<Int>;
   answer?: Maybe<String>;
 }
 
 export interface AnswerSheetCreateInput {
   id?: Maybe<ID_Input>;
+  testName?: Maybe<String>;
   name: String;
   answers?: Maybe<AnswerCreateManyInput>;
 }
@@ -852,6 +905,7 @@ export interface AnswerCreateManyInput {
 }
 
 export interface AnswerSheetUpdateInput {
+  testName?: Maybe<String>;
   name?: Maybe<String>;
   answers?: Maybe<AnswerUpdateManyInput>;
 }
@@ -883,6 +937,7 @@ export interface AnswerUpdateWithWhereUniqueNestedInput {
 }
 
 export interface AnswerUpdateDataInput {
+  testName?: Maybe<String>;
   number?: Maybe<Int>;
   answer?: Maybe<String>;
 }
@@ -908,6 +963,20 @@ export interface AnswerScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  testName?: Maybe<String>;
+  testName_not?: Maybe<String>;
+  testName_in?: Maybe<String[] | String>;
+  testName_not_in?: Maybe<String[] | String>;
+  testName_lt?: Maybe<String>;
+  testName_lte?: Maybe<String>;
+  testName_gt?: Maybe<String>;
+  testName_gte?: Maybe<String>;
+  testName_contains?: Maybe<String>;
+  testName_not_contains?: Maybe<String>;
+  testName_starts_with?: Maybe<String>;
+  testName_not_starts_with?: Maybe<String>;
+  testName_ends_with?: Maybe<String>;
+  testName_not_ends_with?: Maybe<String>;
   number?: Maybe<Int>;
   number_not?: Maybe<Int>;
   number_in?: Maybe<Int[] | Int>;
@@ -941,11 +1010,13 @@ export interface AnswerUpdateManyWithWhereNestedInput {
 }
 
 export interface AnswerUpdateManyDataInput {
+  testName?: Maybe<String>;
   number?: Maybe<Int>;
   answer?: Maybe<String>;
 }
 
 export interface AnswerSheetUpdateManyMutationInput {
+  testName?: Maybe<String>;
   name?: Maybe<String>;
 }
 
@@ -1088,7 +1159,7 @@ export interface GradeSheetUpdateManyMutationInput {
 
 export interface LogCreateInput {
   id?: Maybe<ID_Input>;
-  logName?: Maybe<String>;
+  logName: String;
   user?: Maybe<UserCreateOneWithoutLogsInput>;
   test?: Maybe<TestCreateOneInput>;
   totalScore: Int;
@@ -1115,6 +1186,7 @@ export interface TestCreateOneInput {
 
 export interface TestCreateInput {
   id?: Maybe<ID_Input>;
+  testName: String;
   type: String;
   description: String;
   answerSheet?: Maybe<AnswerSheetCreateManyInput>;
@@ -1169,6 +1241,7 @@ export interface TestUpdateOneInput {
 }
 
 export interface TestUpdateDataInput {
+  testName?: Maybe<String>;
   type?: Maybe<String>;
   description?: Maybe<String>;
   answerSheet?: Maybe<AnswerSheetUpdateManyInput>;
@@ -1205,6 +1278,7 @@ export interface AnswerSheetUpdateWithWhereUniqueNestedInput {
 }
 
 export interface AnswerSheetUpdateDataInput {
+  testName?: Maybe<String>;
   name?: Maybe<String>;
   answers?: Maybe<AnswerUpdateManyInput>;
 }
@@ -1230,6 +1304,20 @@ export interface AnswerSheetScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  testName?: Maybe<String>;
+  testName_not?: Maybe<String>;
+  testName_in?: Maybe<String[] | String>;
+  testName_not_in?: Maybe<String[] | String>;
+  testName_lt?: Maybe<String>;
+  testName_lte?: Maybe<String>;
+  testName_gt?: Maybe<String>;
+  testName_gte?: Maybe<String>;
+  testName_contains?: Maybe<String>;
+  testName_not_contains?: Maybe<String>;
+  testName_starts_with?: Maybe<String>;
+  testName_not_starts_with?: Maybe<String>;
+  testName_ends_with?: Maybe<String>;
+  testName_not_ends_with?: Maybe<String>;
   name?: Maybe<String>;
   name_not?: Maybe<String>;
   name_in?: Maybe<String[] | String>;
@@ -1255,6 +1343,7 @@ export interface AnswerSheetUpdateManyWithWhereNestedInput {
 }
 
 export interface AnswerSheetUpdateManyDataInput {
+  testName?: Maybe<String>;
   name?: Maybe<String>;
 }
 
@@ -1387,12 +1476,14 @@ export interface ScoreUpdateManyMutationInput {
 }
 
 export interface TestUpdateInput {
+  testName?: Maybe<String>;
   type?: Maybe<String>;
   description?: Maybe<String>;
   answerSheet?: Maybe<AnswerSheetUpdateManyInput>;
 }
 
 export interface TestUpdateManyMutationInput {
+  testName?: Maybe<String>;
   type?: Maybe<String>;
   description?: Maybe<String>;
 }
@@ -1413,7 +1504,7 @@ export interface LogCreateManyWithoutUserInput {
 
 export interface LogCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
-  logName?: Maybe<String>;
+  logName: String;
   test?: Maybe<TestCreateOneInput>;
   totalScore: Int;
   gradeInfo?: Maybe<GradeSheetCreateManyInput>;
@@ -1627,12 +1718,14 @@ export interface NodeNode {
 
 export interface Answer {
   id: ID_Output;
+  testName?: String;
   number: Int;
   answer: String;
 }
 
 export interface AnswerPromise extends Promise<Answer>, Fragmentable {
   id: () => Promise<ID_Output>;
+  testName: () => Promise<String>;
   number: () => Promise<Int>;
   answer: () => Promise<String>;
 }
@@ -1641,6 +1734,7 @@ export interface AnswerSubscription
   extends Promise<AsyncIterator<Answer>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  testName: () => Promise<AsyncIterator<String>>;
   number: () => Promise<AsyncIterator<Int>>;
   answer: () => Promise<AsyncIterator<String>>;
 }
@@ -1649,6 +1743,7 @@ export interface AnswerNullablePromise
   extends Promise<Answer | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  testName: () => Promise<String>;
   number: () => Promise<Int>;
   answer: () => Promise<String>;
 }
@@ -1732,11 +1827,13 @@ export interface AggregateAnswerSubscription
 
 export interface AnswerSheet {
   id: ID_Output;
+  testName?: String;
   name: String;
 }
 
 export interface AnswerSheetPromise extends Promise<AnswerSheet>, Fragmentable {
   id: () => Promise<ID_Output>;
+  testName: () => Promise<String>;
   name: () => Promise<String>;
   answers: <T = FragmentableArray<Answer>>(args?: {
     where?: AnswerWhereInput;
@@ -1753,6 +1850,7 @@ export interface AnswerSheetSubscription
   extends Promise<AsyncIterator<AnswerSheet>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  testName: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   answers: <T = Promise<AsyncIterator<AnswerSubscription>>>(args?: {
     where?: AnswerWhereInput;
@@ -1769,6 +1867,7 @@ export interface AnswerSheetNullablePromise
   extends Promise<AnswerSheet | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  testName: () => Promise<String>;
   name: () => Promise<String>;
   answers: <T = FragmentableArray<Answer>>(args?: {
     where?: AnswerWhereInput;
@@ -1987,7 +2086,7 @@ export interface AggregateGradeSheetSubscription
 export interface Log {
   id: ID_Output;
   createdAt?: DateTimeOutput;
-  logName?: String;
+  logName: String;
   totalScore: Int;
 }
 
@@ -2113,6 +2212,7 @@ export interface UserNullablePromise
 export interface Test {
   id: ID_Output;
   createdAt: DateTimeOutput;
+  testName: String;
   type: String;
   description: String;
 }
@@ -2120,6 +2220,7 @@ export interface Test {
 export interface TestPromise extends Promise<Test>, Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
+  testName: () => Promise<String>;
   type: () => Promise<String>;
   description: () => Promise<String>;
   answerSheet: <T = FragmentableArray<AnswerSheet>>(args?: {
@@ -2138,6 +2239,7 @@ export interface TestSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  testName: () => Promise<AsyncIterator<String>>;
   type: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
   answerSheet: <T = Promise<AsyncIterator<AnswerSheetSubscription>>>(args?: {
@@ -2156,6 +2258,7 @@ export interface TestNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
+  testName: () => Promise<String>;
   type: () => Promise<String>;
   description: () => Promise<String>;
   answerSheet: <T = FragmentableArray<AnswerSheet>>(args?: {
@@ -2428,6 +2531,7 @@ export interface AnswerSubscriptionPayloadSubscription
 
 export interface AnswerPreviousValues {
   id: ID_Output;
+  testName?: String;
   number: Int;
   answer: String;
 }
@@ -2436,6 +2540,7 @@ export interface AnswerPreviousValuesPromise
   extends Promise<AnswerPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  testName: () => Promise<String>;
   number: () => Promise<Int>;
   answer: () => Promise<String>;
 }
@@ -2444,6 +2549,7 @@ export interface AnswerPreviousValuesSubscription
   extends Promise<AsyncIterator<AnswerPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  testName: () => Promise<AsyncIterator<String>>;
   number: () => Promise<AsyncIterator<Int>>;
   answer: () => Promise<AsyncIterator<String>>;
 }
@@ -2475,6 +2581,7 @@ export interface AnswerSheetSubscriptionPayloadSubscription
 
 export interface AnswerSheetPreviousValues {
   id: ID_Output;
+  testName?: String;
   name: String;
 }
 
@@ -2482,6 +2589,7 @@ export interface AnswerSheetPreviousValuesPromise
   extends Promise<AnswerSheetPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  testName: () => Promise<String>;
   name: () => Promise<String>;
 }
 
@@ -2489,6 +2597,7 @@ export interface AnswerSheetPreviousValuesSubscription
   extends Promise<AsyncIterator<AnswerSheetPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  testName: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
 }
 
@@ -2570,7 +2679,7 @@ export interface LogSubscriptionPayloadSubscription
 export interface LogPreviousValues {
   id: ID_Output;
   createdAt?: DateTimeOutput;
-  logName?: String;
+  logName: String;
   totalScore: Int;
 }
 
@@ -2670,6 +2779,7 @@ export interface TestSubscriptionPayloadSubscription
 export interface TestPreviousValues {
   id: ID_Output;
   createdAt: DateTimeOutput;
+  testName: String;
   type: String;
   description: String;
 }
@@ -2679,6 +2789,7 @@ export interface TestPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   createdAt: () => Promise<DateTimeOutput>;
+  testName: () => Promise<String>;
   type: () => Promise<String>;
   description: () => Promise<String>;
 }
@@ -2688,6 +2799,7 @@ export interface TestPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  testName: () => Promise<AsyncIterator<String>>;
   type: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
 }
@@ -2752,14 +2864,14 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
-
-/*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
 export type String = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.

@@ -3,7 +3,7 @@
 
   type Query {
     test(id: ID!): Test
-    tests: [Test!]!
+    tests(filter: String, skip: Int, first: Int, orderBy: TestOrderByInput): [Test!]!
     log(id: ID!): Log
     logs(filter: String, skip: Int, first: Int, orderBy: LogOrderByInput): [Log!]!
     user(id: ID!): User
@@ -13,6 +13,7 @@
 
   type Mutation {
     createTest(type: Type!, description: String!, answerSheet: [AnswerSheetInput!]!): Test!
+    deleteTest(testName: String!): String!
     createLog(userId: ID!, testId: ID!, answerSheet: [AnswerSheetInput!]!): Log!
     deleteLog(logName: String!): String!
     signup(email: String!, password: String!, name: String!, userType: userType!): AuthPayload
@@ -31,6 +32,7 @@
   type Test {
     id: ID!
     createdAt: DateTime!
+    testName: String!
     type: Type!
     description: String!
     answerSheet: [AnswerSheet!]!
@@ -38,6 +40,7 @@
 
   type AnswerSheet {
     id: ID!
+    testName: String!
     name: String!
     answers: [Answer!]!
   }
@@ -49,6 +52,7 @@
 
   type Answer {
     id: ID!
+    testName: String!
     number: Int!
     answer: TenBranch!
   }
@@ -135,6 +139,17 @@
   enum OX {
     O
     X
+  }
+
+  enum TestOrderByInput {
+    id_ASC
+    id_DESC
+    createdAt_ASC
+    createdAt_DESC
+    type_ASC
+    type_DESC
+    description_ASC
+    description_DESC
   }
 
   enum LogOrderByInput {

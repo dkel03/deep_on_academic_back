@@ -3,8 +3,21 @@ import { getUserType } from "../../utils"
 const test = async (parent, args, context, info) => {
   return context.prisma.test({ id: args.id });
 }
+
 const tests = async (parent, args, context, info) => {
-  return context.prisma.tests();
+  const where = args.filter
+  ? {
+      OR: [
+        { logName: args.filter },
+      ],
+    }
+  : {};
+  return context.prisma.tests({
+    where,
+    skip: args.skip,
+    first: args.first,
+    orderBy: args.orderBy,
+  });
 };
 const log = async (parent, args, context, info) => {
   return context.prisma.log({ id: args.id });

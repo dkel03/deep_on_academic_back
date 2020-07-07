@@ -11,6 +11,28 @@ export const getUserType = (context) => {
   return null;
 };
 
+export const getTestAnswerSheet = (answerSheet, testName) => {
+  const testAnswerSheet = {
+    create: answerSheet.map(sheet => {
+      return {
+        testName,
+        name: sheet.name,
+        answers: {
+          create: sheet.answers.map(answer => {
+            return {
+              testName,
+              number: answer.number,
+              answer: answer.answer
+            }
+          })
+        }
+      }
+    })
+  }
+  return testAnswerSheet
+}
+
+
 export const getGrade = (testAnswer, omrAnswer, logName) => {
   const gradeInfo = {
     create: []

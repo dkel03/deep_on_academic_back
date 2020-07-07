@@ -1,6 +1,7 @@
 type Test {
   id: ID! @id
   createdAt: DateTime! @createdAt
+  testName: String! @unique
   type: String!
   description: String! 
   answerSheet: [AnswerSheet!]!
@@ -8,12 +9,14 @@ type Test {
 
 type AnswerSheet {
   id: ID! @id
+  testName: String
   name: String!
   answers: [Answer!]!
 }
 
 type Answer {
   id: ID! @id
+  testName: String
   number: Int!
   answer: String!
 }

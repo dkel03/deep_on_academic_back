@@ -1,29 +1,26 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { APP_SECRET, getGrade, randomString } from "../../utils";
+import { APP_SECRET, getTestAnswerSheet, getGrade, randomString } from "../../utils";
 
-const createTest = (parent, args, context, info) => {
-  const answerSheet = {
-    create: args.answerSheet.map(sheet => {
-      return {
-        name: sheet.name,
-        answers: {
-          create: sheet.answers.map(answer => {
-            return {
-              number: answer.number,
-              answer: answer.answer
-            }
-          })
-        }
-      }
-    })
-  }
-  return context.prisma.createTest({
+const createTest = async (parent, args, context, info) => {
+  const testName = `${args.description}-${randomString()}`
+  const answerSheet = await getTestAnswerSheet(args.answerSheet, testName)
+  const test = await context.prisma.createTest({
+    testName,
     type: args.type,
     description: args.description,
     answerSheet
   });
+  return test;
 };
+
+const deleteTest = async (parent, args, context, info) => {
+  let status = "success"
+  const test = await context.prisma.deleteTest({testName: args.testName})
+  const answerSheets = await context.prisma.deleteManyAnswerSheets({testName: args.testName})
+  const answer = await context.prisma.deleteManyAnswers({testName: args.testName});
+  return status
+}
 
 const createLog = async (parent, args, context, info) => {
   const fragment = `
@@ -87,6 +84,7 @@ const login = async (parent, args, context, info) => {
 
 module.exports = {
   createTest,
+  deleteTest,
   createLog,
   deleteLog,
   signup,
